@@ -1,0 +1,12 @@
+
+
+Additional release beta version 0.1 September 2016
+  Major rewrite of IRLib1 restructuring everything
+  Added auto resume feature when using external buffer
+  But fixes
+  Included new protocols which were previously supported only
+    by sample code into the main libraries.
+  See users manual Appendix A for details of changes and explanation
+    of reasons that this is no longer backward-compatible with IRLib1.
+  Added Section 2 Beginners Tutorial and long-awaited Section 3 on
+    how to add new protocols.
