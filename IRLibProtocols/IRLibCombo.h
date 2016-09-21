@@ -110,7 +110,7 @@
 //Note protocol 90- 99 for sample code that will be unsupported in the final version.
 //See IRLibProtocols/unsupported/IRLib_P90_Unsupported.h for details
 #ifndef IRLIB_PROTOCOL_90_H
-	#define IR_SEND_PROTOCOyL_90
+	#define IR_SEND_PROTOCOL_90
 	#define IR_DECODE_PROTOCOL_90
 	#define PV_IR_DECODE_PROTOCOL_90
 	#define PV_IR_SEND_PROTOCOL_90

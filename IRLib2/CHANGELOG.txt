@@ -1,6 +1,7 @@
+Version beta 0.11 September 21, 2016
+  Fixed extra character in IRLibProtocols/IRLibCombo.h
 
-
-Additional release beta version 0.1 September 2016
+Additional release beta version 0.1 September 20, 2016
   Major rewrite of IRLib1 restructuring everything
   Added auto resume feature when using external buffer
   But fixes
