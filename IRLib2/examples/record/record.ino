@@ -76,7 +76,7 @@ void sendCode(void) {
         case 20: codeValue ^= 0x10000; break;
         case 24: codeValue ^= 0x100000; break;
         case 28: codeValue ^= 0x1000000; break;
-        case 32: codeValue ^= 0xc0000000; break;
+        case 32: codeValue ^= 0x8000; break;
       }      
     }
   }

@@ -29,7 +29,7 @@
  * RC6-0-16: Original version by Phillips.      16 bits, we encode 20, toggle is 0x00010000
  * RC6-6-20: Used by some Sky and Sky+ remotes. 20 bits, we encode 24, toggle is 0x00100000
  * RC6-6-24: Also known as "Replay" protocol.   24 bits, we encode 28, toggle is 0x01000000
- * RC6-6-32: Also known as "MCE" protocol.      32 bits, we encode 32, toggle is 0x80000000
+ * RC6-6-32: Also known as "MCE" protocol.      32 bits, we encode 32, toggle is 0x00008000
  */
 #ifndef IRLIB_PROTOCOL_04_H
 #define IRLIB_PROTOCOL_04_H
