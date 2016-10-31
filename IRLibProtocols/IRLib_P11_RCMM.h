@@ -40,7 +40,7 @@
 #ifdef IRLIBSENDBASE_H
 class IRsendRCMM: public virtual IRsendBase {
   public:
-    void IRsendRCMM::send(uint32_t data, uint8_t nBits= 12) {
+    void send(uint32_t data, uint8_t nBits= 12) {
       if (nBits==0) nBits=12;
       extent=0;
       data <<= (32 - nBits);
@@ -76,7 +76,7 @@ class IRsendRCMM: public virtual IRsendBase {
 #define RCMM_TOLERANCE 80
 class IRdecodeRCMM: public virtual IRdecodeBase {
   public:
-    bool IRdecodeRCMM::decode(void) {
+    bool decode(void) {
       resetDecoder();//This used to be in the receiver getResults.
       IRLIB_ATTEMPT_MESSAGE(F("RCMM"));
       if ( (recvGlobal.decodeLength!=(12+4)) && (recvGlobal.decodeLength!=(24+4)) && (recvGlobal.decodeLength!=(32+4)) ) return RAW_COUNT_ERROR;
