@@ -4,6 +4,8 @@
  *
  * This file was formally called IRLibTimer.h but we have renamed it because it more
  * accurately reflects the fact that it contains all of the hardware specific defines.
+ * It contains mostly definitions for 8-bit AVR processors. More advanced processors such as
+ * SAMD21 definitions will now be defined in a separate processor specific header file.
  * NOTE: IRLibHardware.cpp is not related to hardware. See the comments in that file
  * to explain why it was created and what purpose it serves.
  */
@@ -71,7 +73,11 @@
 	//#define IR_SEND_TIMER1	13
 	#define IR_SEND_TIMER2		14
   
-/* Pinoccio Scout */
+/* Arduino Zero, M0, M0 Pro, Feather M0 etc. */
+#elif defined (__SAMD21G18A__)
+// All of the settings can be found in IRLibSAMD21.h
+  #include "IRLibSAMD21.h"
+  /* Pinoccio Scout */
 #elif defined(__AVR_ATmega256RFR2__)
 	#define IR_SEND_TIMER3		3
 
@@ -106,6 +112,7 @@
  * NOTE: You are responsible for ensuring that the timer you are specifying is 
  * available on your hardware. You should only choose timers which are shown as available 
  * for your hardware platform as shown in the defines in the IR_SEND_TIMER section above.
+ * NOTE: This discussion does not apply to SAMD 21 processors.
  */
 //#define IR_RECV_TIMER_OVERRIDE
 //#define IR_RECV_TIMER1
@@ -140,7 +147,9 @@
 		#define IR_RECV_TIMER4_HS
 	#elif defined(IR_SEND_TIMER5)
 		#define IR_RECV_TIMER5
-	#else
+	#elif defined(__SAMD21G18A__)//handle this one a little differently
+    #define IR_RECV_TC3
+  #else
 		#error "Unable to set IR_RECV_TIMER"
 	#endif
 #endif
@@ -242,6 +251,14 @@
 	#else
 		#define IR_SEND_PWM_PIN	IR_SEND_TIMER5
 	#endif
+#elif defined(IRLibSAMD21_h) // Used for SAMD 21
+/* All of these definitions have been moved to IRLibSAMD21.h
+	#define IR_SEND_PWM_START 
+	#define IR_SEND_MARK_TIME(time)
+	#define IR_SEND_PWM_STOP 
+  #define IR_SEND_PWM_PIN	
+	#define IR_SEND_CONFIG_KHZ(val) 
+ */
 #else // unknown timer
 	#error "Internal code configuration error, no known IR_SEND_TIMER# defined\n"
 #endif
@@ -255,7 +272,7 @@
 #if defined(IR_RECV_TIMER1)  // defines for timer1 (16 bits)
 	#define IR_RECV_ENABLE_INTR    (TIMSK1 = _BV(OCIE1A))
 	#define IR_RECV_DISABLE_INTR   (TIMSK1 = 0)
-	#define IR_RECV_INTR_NAME      TIMER1_COMPA_vect
+	#define IR_RECV_INTR_NAME      ISR(TIMER1_COMPA_vect,ISR_NOBLOCK)
 	#define IR_RECV_CONFIG_TICKS() ({ \
 		TCCR1A = 0;   TCCR1B = _BV(WGM12) | _BV(CS10); \
 		OCR1A = SYSCLOCK * USEC_PER_TICK / 1000000;   TCNT1 = 0; })
@@ -263,7 +280,7 @@
 #elif defined(IR_RECV_TIMER2)  // defines for timer2 (8 bits)
 	#define IR_RECV_ENABLE_INTR    (TIMSK2 = _BV(OCIE2A))
 	#define IR_RECV_DISABLE_INTR   (TIMSK2 = 0)
-	#define IR_RECV_INTR_NAME      TIMER2_COMPA_vect
+	#define IR_RECV_INTR_NAME      ISR(TIMER2_COMPA_vect,ISR_NOBLOCK)
 	#define IR_RECV_COUNT_TOP      (SYSCLOCK * USEC_PER_TICK / 1000000)
 	#if (IR_RECV_COUNT_TOP < 256)
 		#define IR_RECV_CONFIG_TICKS() ({ \
@@ -278,7 +295,7 @@
 #elif defined(IR_RECV_TIMER3)  // defines for timer3 (16 bits)
 	#define IR_RECV_ENABLE_INTR    (TIMSK3 = _BV(OCIE3A))
 	#define IR_RECV_DISABLE_INTR   (TIMSK3 = 0)
-	#define IR_RECV_INTR_NAME      TIMER3_COMPA_vect
+	#define IR_RECV_INTR_NAME      ISR(TIMER3_COMPA_vect,ISR_NOBLOCK)
 	#define IR_RECV_CONFIG_TICKS() ({ \
 		TCCR3A = 0;   TCCR3B = _BV(WGM32) | _BV(CS30); \
 		OCR3A = SYSCLOCK * USEC_PER_TICK / 1000000;   TCNT3 = 0; })
@@ -286,7 +303,7 @@
 #elif defined(IR_RECV_TIMER4_HS)  // defines for timer4 (10 bits, high speed option)
 	#define IR_RECV_ENABLE_INTR    (TIMSK4 = _BV(TOIE4))
 	#define IR_RECV_DISABLE_INTR   (TIMSK4 = 0)
-	#define IR_RECV_INTR_NAME      TIMER4_OVF_vect
+	#define IR_RECV_INTR_NAME      ISR(TIMER4_OVF_vect,ISR_NOBLOCK)
 	#define IR_RECV_CONFIG_TICKS() ({ \
 		TCCR4A = 0;   TCCR4B = _BV(CS40); \
 		TCCR4C = 0;   TCCR4D = 0; TCCR4E = 0; \
@@ -297,7 +314,7 @@
 #elif defined(IR_RECV_TIMER4) // defines for timer4 (16 bits)
 	#define IR_RECV_ENABLE_INTR    (TIMSK4 = _BV(OCIE4A))
 	#define IR_RECV_DISABLE_INTR   (TIMSK4 = 0)
-	#define IR_RECV_INTR_NAME      TIMER4_COMPA_vect
+	#define IR_RECV_INTR_NAME      ISR(TIMER4_COMPA_vect,ISR_NOBLOCK)
 	#define IR_RECV_CONFIG_TICKS() ({ \
 		TCCR4A = 0;   TCCR4B = _BV(WGM42) | _BV(CS40); \
 		OCR4A = SYSCLOCK * USEC_PER_TICK / 1000000;   TCNT4 = 0; })
@@ -305,37 +322,46 @@
 #elif defined(IR_RECV_TIMER5)  // defines for timer5 (16 bits)
 	#define IR_RECV_ENABLE_INTR    (TIMSK5 = _BV(OCIE5A))
 	#define IR_RECV_DISABLE_INTR   (TIMSK5 = 0)
-	#define IR_RECV_INTR_NAME      TIMER5_COMPA_vect
+	#define IR_RECV_INTR_NAME      ISR(TIMER5_COMPA_vect,ISR_NOBLOCK)
 	#define IR_RECV_CONFIG_TICKS() ({ \
 		TCCR5A = 0;   TCCR5B = _BV(WGM52) | _BV(CS50); \
 		OCR5A = SYSCLOCK * USEC_PER_TICK / 1000000;   TCNT5 = 0; })
+#elif defined(IRLibSAMD21_h)  //for SAMD 21
+/* All of these definitions have been moved to IRLibSAMD21.h
+	#define IR_RECV_ENABLE_INTR 
+  #define IR_RECV_DISABLE_INTR
+	#define IR_RECV_INTR_NAME
+	#define IR_RECV_CONFIG_TICKS()
+ */
 #else // unknown timer
 	#error "Internal code configuration error, no known IR_RECV_TIMER# defined\n"
 #endif
 
 // defines for blinking the LED
-#if defined(CORE_LED0_PIN)
-#define BLINKLED       CORE_LED0_PIN
-#define BLINKLED_ON()  (digitalWrite(CORE_LED0_PIN, HIGH))
-#define BLINKLED_OFF() (digitalWrite(CORE_LED0_PIN, LOW))
-#elif defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-#define BLINKLED       13
-#define BLINKLED_ON()  (PORTB |= B10000000)
-#define BLINKLED_OFF() (PORTB &= B01111111)
-#elif defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644__)
-#define BLINKLED       0
-#define BLINKLED_ON()  (PORTD |= B00000001)
-#define BLINKLED_OFF() (PORTD &= B11111110)
-#elif defined(__AVR_ATmega32U4__) && defined(IR_SEND_TIMER4_HS)
+#ifndef BLINKLED
+  #if defined(CORE_LED0_PIN)
+    #define BLINKLED       CORE_LED0_PIN
+    #define BLINKLED_ON()  (digitalWrite(CORE_LED0_PIN, HIGH))
+    #define BLINKLED_OFF() (digitalWrite(CORE_LED0_PIN, LOW))
+  #elif defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
+    #define BLINKLED       13
+    #define BLINKLED_ON()  (PORTB |= B10000000)
+    #define BLINKLED_OFF() (PORTB &= B01111111)
+  #elif defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644__)
+    #define BLINKLED       0
+    #define BLINKLED_ON()  (PORTD |= B00000001)
+    #define BLINKLED_OFF() (PORTD &= B11111110)
+  #elif defined(__AVR_ATmega32U4__) && defined(IR_SEND_TIMER4_HS)
 //Leonardo not teensy. When using Timer4 output is on 13. Therefore disabling blink LED
 //You can add an LED elsewhere if you want
-#define BLINKLED       1
-#define BLINKLED_ON()  (digitalWrite(BLINKLED, HIGH))
-#define BLINKLED_OFF() (digitalWrite(BLINKLED, LOW))
-#else
-#define BLINKLED       13
-#define BLINKLED_ON()  (PORTB |= B00100000)
-#define BLINKLED_OFF() (PORTB &= B11011111)
+    #define BLINKLED       1
+    #define BLINKLED_ON()  (digitalWrite(BLINKLED, HIGH))
+    #define BLINKLED_OFF() (digitalWrite(BLINKLED, LOW))
+  #else
+    #define BLINKLED       13
+    #define BLINKLED_ON()  (PORTB |= B00100000)
+    #define BLINKLED_OFF() (PORTB &= B11011111)
+  #endif
 #endif
 
 extern uint8_t IRLib_didIROut;//See the explanation in IRLibHardware.cpp
