@@ -17,7 +17,6 @@
 
 #include "IRLibRecvPCI.h"
 #include "IRLibHardware.h" //needed for IRLib_didIROut
-#include <util/atomic.h> //for ATOMIC_BLOCK macro 
 
 void IRrecvPCI_Handler();//prototype for interrupt handler
 
@@ -64,8 +63,9 @@ void IRrecvPCI::disableIRIn(void) {
  * is changing, it may not recognize the long gap at the end of the frame so we need to
  * test to see if we had a long gap. Because the ISR is active, we need to ensure
  * that it doesn't change any variables while we are in the middle of accessing them.
- * The ATOMIC_BLOCK macro ensures this by briefly disabling interrupts and then restoring 
- * them the data is fetched. This is only necessary for multibyte variables.
+ * Unfortunately the ATOMIC_BLOCK macro that we used to use is not supported for 
+ * SAMD 21 platforms so we have to use "noInterrupts();" and "interrupts();" 
+ * This is only necessary for multibyte variables.
  */
 bool IRrecvPCI::getResults(void) {
   if(recvGlobal.newDataAvailable) {
@@ -77,9 +77,9 @@ bool IRrecvPCI::getResults(void) {
     //Only check for timeout if it is a SPACE
     if(digitalRead(recvGlobal.recvPin)) {//pin high means SPACE
       uint32_t changeTime; //time of the last change
-      ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        changeTime=recvGlobal.timer;
-      }
+      noInterrupts ();  //Ensure atomic access of volatile variable
+      changeTime=recvGlobal.timer;
+      interrupts(); //restore interrupts
       if( (micros()-changeTime) > recvGlobal.frameTimeout) {
         IRLib_IRrecvComplete(3);
         IRrecvBase::getResults();
