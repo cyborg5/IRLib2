@@ -12,7 +12,9 @@
  
 #include "IRLibRecv.h"
 #include "IRLibHardware.h" //needed for IRLib_didIROut
-#include <avr/interrupt.h>
+#if !defined (__SAMD21G18A__)
+  #include <avr/interrupt.h>
+#endif
   
 /* Initializes receiving and starts up the 50us interrupt timer. Call this to initialize
  * and call it again to resume receiving after completing the decoding. Previous versions of
@@ -36,10 +38,10 @@ void IRrecv::enableIRIn(void) {
     IRrecvBase::enableIRIn();
     recvGlobal.timer = 0;
     // setup pulse clock timer interrupt
-    cli();
+    noInterrupts();
     IR_RECV_CONFIG_TICKS();
     IR_RECV_ENABLE_INTR;
-    sei();
+    interrupts();
   }
 }
 
@@ -81,13 +83,15 @@ void IRrecv::setFrameTimeout(uint16_t frameTimeout) {
  * A description of each state is given in the code below. More details on the ISR macro
  * see http://www.atmel.com/webdoc/AVRLibcReferenceManual/group__avr__interrupts.html
  */
-ISR(IR_RECV_INTR_NAME,ISR_NOBLOCK)
-{
+IR_RECV_INTR_NAME {
 //If the receiver pin is low, data is a MARK, if high, data is a SPACE
   #define IR_MARK 0
   #define IR_SPACE 1
   uint8_t irData = digitalRead(recvGlobal.recvPin);
   recvGlobal.timer++; // One more 50us tick
+  #if defined (__SAMD21G18A__)
+    TC3->COUNT16.INTFLAG.bit.MC0 = 1;  // clear interrupt
+  #endif
   if (recvGlobal.recvLength >= RECV_BUF_LENGTH) {    // Buffer overflow
     IRLib_IRrecvComplete(4);
   }
