@@ -1,3 +1,12 @@
+Version 2.02 March 15, 2017 
+  Expanded support for SAMD 21. Now can use any available PWM
+    pins for output. TCC0 and TCC1 selected automatically based
+    on pin number. Receiving using 50 microsecond interrupt defaults
+    to using TC3 however TC4 and TC5 can be used optionally to avoid
+    conflicts with other libraries. GCLK0 is used for both sending and
+    receiving however it uses the default 48 MHz clock source without
+    any divisor so it's safe to use despite the fact it's normally 
+    reserved for internal Arduino infrastructure.
 Version 2.01 February 28, 2017
   Added preliminary support for SAMD 21 platforms such as
     Arduino Zero, Arduino M0 Pro, and Adafruit Feather M0.

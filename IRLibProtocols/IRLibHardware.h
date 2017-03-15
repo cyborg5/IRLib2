@@ -19,6 +19,10 @@
 #define IRLibHardware_h
 
 #include "Arduino.h"
+
+//This is a default for AVRs. SAMD21 will override it.
+#define IR_CLEAR_INTERRUPT {} //clear interrupt flag
+
 // defines for setting and clearing register bits
 #ifndef cbi
 #define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
@@ -55,6 +59,10 @@
 		//#define IR_SEND_TIMER1	14
 		//#define IR_SEND_TIMER3	9
 		#define IR_SEND_TIMER4_HS	10
+	#elif defined(ARDUINO_AVR_FEATHER32U4)
+    //Adafruit feather cannot use pin 9 because it's connected to battery monitor
+    #define IR_SEND_TIMER3	5
+		//#define IR_SEND_TIMER4_HS	13
 	#else
 	/* it's probably Leonardo */
 		#define IR_SEND_TIMER1		9
@@ -337,6 +345,12 @@
 	#error "Internal code configuration error, no known IR_RECV_TIMER# defined\n"
 #endif
 
+//Cannot use blinking LED on 13 if that's the output pin.
+#if (IR_SEND_PWM_PIN==13)
+  #define BLINKLED      -1
+  #define BLINKLED_ON() 
+  #define BLINKLED_OFF()
+#endif
 // defines for blinking the LED
 #ifndef BLINKLED
   #if defined(CORE_LED0_PIN)
@@ -351,16 +365,14 @@
     #define BLINKLED       0
     #define BLINKLED_ON()  (PORTD |= B00000001)
     #define BLINKLED_OFF() (PORTD &= B11111110)
-  #elif defined(__AVR_ATmega32U4__) && defined(IR_SEND_TIMER4_HS)
-//Leonardo not teensy. When using Timer4 output is on 13. Therefore disabling blink LED
-//You can add an LED elsewhere if you want
-    #define BLINKLED       1
-    #define BLINKLED_ON()  (digitalWrite(BLINKLED, HIGH))
-    #define BLINKLED_OFF() (digitalWrite(BLINKLED, LOW))
-  #else
+  #elif defined(__AVR_ATmega32u4__) || defined(__AVR_ATmega328__)
     #define BLINKLED       13
     #define BLINKLED_ON()  (PORTB |= B00100000)
     #define BLINKLED_OFF() (PORTB &= B11011111)
+  #else
+    #define BLINKLED       13
+    #define BLINKLED_ON()  (digitalWrite(13, HIGH))
+    #define BLINKLED_OFF() (digitalWrite(13, LOW))  
   #endif
 #endif
 

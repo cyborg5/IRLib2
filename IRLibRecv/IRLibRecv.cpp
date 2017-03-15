@@ -89,9 +89,7 @@ IR_RECV_INTR_NAME {
   #define IR_SPACE 1
   uint8_t irData = digitalRead(recvGlobal.recvPin);
   recvGlobal.timer++; // One more 50us tick
-  #if defined (__SAMD21G18A__)
-    TC3->COUNT16.INTFLAG.bit.MC0 = 1;  // clear interrupt
-  #endif
+  IR_CLEAR_INTERRUPT
   if (recvGlobal.recvLength >= RECV_BUF_LENGTH) {    // Buffer overflow
     IRLib_IRrecvComplete(4);
   }
