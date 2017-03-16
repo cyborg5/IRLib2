@@ -1,3 +1,5 @@
+Version 2.03 March 17, 2017 
+  Removed restrictions on Adafruit Feather 32u4 pin 9 
 Version 2.02 March 15, 2017 
   Expanded support for SAMD 21. Now can use any available PWM
     pins for output. TCC0 and TCC1 selected automatically based

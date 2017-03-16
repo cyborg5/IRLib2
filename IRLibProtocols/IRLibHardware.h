@@ -59,10 +59,6 @@
 		//#define IR_SEND_TIMER1	14
 		//#define IR_SEND_TIMER3	9
 		#define IR_SEND_TIMER4_HS	10
-	#elif defined(ARDUINO_AVR_FEATHER32U4)
-    //Adafruit feather cannot use pin 9 because it's connected to battery monitor
-    #define IR_SEND_TIMER3	5
-		//#define IR_SEND_TIMER4_HS	13
 	#else
 	/* it's probably Leonardo */
 		#define IR_SEND_TIMER1		9
