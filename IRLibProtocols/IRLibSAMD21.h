@@ -83,7 +83,7 @@
 #define syncGCLK while (GCLK->STATUS.bit.SYNCBUSY)
 
 #if defined(ARDUINO_SAMD_FEATHER_M0)
-  #if (IR_SEND_PWM_PIN<5) || ((IR_SEND_PWM_PIN==7) || (IR_SEND_PWM_PIN==8)
+  #if ( (IR_SEND_PWM_PIN<5) || (IR_SEND_PWM_PIN==7) || (IR_SEND_PWM_PIN==8) )
     #error "Pin unsupported on Adafruit Feather M0"
   #endif
 #endif
