@@ -28,4 +28,4 @@ Do not install them in a single folder such as this…
   * IRLibRecvPCI
  
 Supported platforms include most 8-bit AVR Arduino boards such as Arduino Uno, Leonardo, and Mega 256.
-Preliminary support for SAMD 21 processor such as Arduino Zero, Arduino M0 Pro, and Adafruit Feather M0. Note: Documentation has not yet been updated to support SAMD 21. See IRLib2/SAMD21.txt for details.
+Also supports boards with SAMD 21 processor such as Arduino Zero, Arduino M0 Pro, Adafruit Feather M0, and Adafruit Circuit Playground Express. Note: Documentation has not yet been updated to support SAMD 21. See IRLib2/SAMD21.txt for details.

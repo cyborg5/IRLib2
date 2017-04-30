@@ -115,6 +115,18 @@
 	#define PV_IR_DECODE_PROTOCOL_90
 	#define PV_IR_SEND_PROTOCOL_90
 #endif
+#ifndef IRLIB_PROTOCOL_91_H
+	#define IR_SEND_PROTOCOL_91
+	#define IR_DECODE_PROTOCOL_91
+	#define PV_IR_DECODE_PROTOCOL_91
+	#define PV_IR_SEND_PROTOCOL_91
+#endif
+#ifndef IRLIB_PROTOCOL_92_H
+	#define IR_SEND_PROTOCOL_92
+	#define IR_DECODE_PROTOCOL_92
+	#define PV_IR_DECODE_PROTOCOL_92
+	#define PV_IR_SEND_PROTOCOL_92
+#endif
 /*
  * You may add additional protocols by copying and modifying the previous six lines.
  * You must also add appropriate macros in each segment below. Be sure to maintain 
@@ -135,6 +147,8 @@ class IRdecode:
 	PV_IR_DECODE_PROTOCOL_11
 	PV_IR_DECODE_PROTOCOL_12
 	PV_IR_DECODE_PROTOCOL_90 //Add additional 13, 14 etc. above this
+	PV_IR_DECODE_PROTOCOL_91
+	PV_IR_DECODE_PROTOCOL_92
 	PV_IR_DECODE_HASH	//Must be last one. 
 {
 public:
@@ -152,6 +166,8 @@ public:
 		IR_DECODE_PROTOCOL_11
 		IR_DECODE_PROTOCOL_12
     IR_DECODE_PROTOCOL_90 //Add additional 13, 14 etc. above this
+		IR_DECODE_PROTOCOL_91
+		IR_DECODE_PROTOCOL_92
 	  IR_DECODE_HASH	//Must be last one. 
 		return false;
 	}
@@ -173,6 +189,8 @@ class IRsend:
 	PV_IR_SEND_PROTOCOL_11
 	PV_IR_SEND_PROTOCOL_12
   PV_IR_SEND_PROTOCOL_90 //Add additional 13, 14 etc. above this
+	PV_IR_SEND_PROTOCOL_91
+	PV_IR_SEND_PROTOCOL_92
 	PV_IR_SEND_RAW	//Must be last one.
 {
 public:
@@ -192,6 +210,8 @@ public:
 			IR_SEND_PROTOCOL_11
 			IR_SEND_PROTOCOL_12
 			IR_SEND_PROTOCOL_90 //Add additional 13, 14 etc. above this 
+			IR_SEND_PROTOCOL_91
+			IR_SEND_PROTOCOL_92
 			IR_SEND_RAW	//Must be last one.
 		}
 	}
