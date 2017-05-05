@@ -1,4 +1,4 @@
-﻿#IRLib2 A Library for Receiving, Decoding and Sending Infrared Signals Using Arduino.
+﻿# IRLib2 A Library for Receiving, Decoding and Sending Infrared Signals Using Arduino.
 
 IRLib2 is copyright 2017 by Chris Young. It it is a major rewrite of the original IRLib 1.x by Chris Young which in turn was based on IRremote by Ken Shirriff. See COPYRIGHT.txt for details.
 

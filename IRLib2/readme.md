@@ -1,4 +1,4 @@
-﻿#IRLib2 A Library for Receiving, Decoding and Sending Infrared Signals Using Arduino.
+﻿# IRLib2 A Library for Receiving, Decoding and Sending Infrared Signals Using Arduino.
 
 IRLib2 is copyright 2017 by Chris Young. It it is a major rewrite of the original IRLib 1.x by Chris Young which in turn was based on IRremote by Ken Shirriff. See COPYRIGHT.txt for details.
 
@@ -28,4 +28,4 @@ Do not install them in a single folder such as this…
   * IRLibRecvPCI
  
 Supported platforms include most 8-bit AVR Arduino boards such as Arduino Uno, Leonardo, and Mega 256.
-Preliminary support for SAMD 21 processor such as Arduino Zero, Arduino M0 Pro, and Adafruit Feather M0. Note: Documentation has not yet been updated to support SAMD 21. See IRLib2/SAMD21.txt for details.
+Also supports boards with SAMD 21 processor such as Arduino Zero, Arduino M0 Pro, Adafruit Feather M0, and Adafruit Circuit Playground Express. Note: Documentation has not yet been updated to support SAMD 21. See IRLib2/SAMD21.txt for details.

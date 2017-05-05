@@ -23,9 +23,10 @@
 #define GICABLE 9 
 #define DIRECTV 10
 #define RCMM 11
-//#define ADDITIONAL_12 12	//add additional protocols here
-//#define ADDITIONAL_13 13
-#define LAST_PROTOCOL 11 //Be sure to update this when adding protocols
+#define CYKM 12
+//#define ADDITIONAL_13 13	//add additional protocols here
+//#define ADDITIONAL_14 14
+#define LAST_PROTOCOL 12 //Be sure to update this when adding protocols
 
 /*
  * Returns a pointer to a flash stored string that is the name of the protocol received. 

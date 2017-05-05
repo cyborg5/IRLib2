@@ -18,8 +18,8 @@ const __FlashStringHelper *Pnames(uint8_t type) {
   // You can add additional strings before the entry for hash code.
   const __FlashStringHelper *Names[LAST_PROTOCOL+1]={
 	F("Unknown"),F("NEC"),F("Sony"),F("RC5"),F("RC6"),F("Panasonic Old"),F("JVC"),
-	F("NECx"),F("Samsung36"),F("G.I.Cable"),F("DirecTV"),F("rcmm")
-  //,F("Additional_12")//expand or edit these
+	F("NECx"),F("Samsung36"),F("G.I.Cable"),F("DirecTV"),F("rcmm"),F("CYKM")
+  //,F("Additional_13")//expand or edit these
   };
   return Names[type];
 };

@@ -105,7 +105,19 @@
 	#define PV_IR_DECODE_PROTOCOL_12
 	#define PV_IR_SEND_PROTOCOL_12
 #endif
-//Add additional protocols 13, 14, etc. above.
+#ifndef IRLIB_PROTOCOL_13_H
+	#define IR_SEND_PROTOCOL_13
+	#define IR_DECODE_PROTOCOL_13
+	#define PV_IR_DECODE_PROTOCOL_13
+	#define PV_IR_SEND_PROTOCOL_13
+#endif
+#ifndef IRLIB_PROTOCOL_14_H
+	#define IR_SEND_PROTOCOL_14
+	#define IR_DECODE_PROTOCOL_14
+	#define PV_IR_DECODE_PROTOCOL_14
+	#define PV_IR_SEND_PROTOCOL_14
+#endif
+//Add additional protocols 15, 16, etc. above.
 
 //Note protocol 90- 99 for sample code that will be unsupported in the final version.
 //See IRLibProtocols/unsupported/IRLib_P90_Unsupported.h for details
@@ -146,7 +158,9 @@ class IRdecode:
 	PV_IR_DECODE_PROTOCOL_10
 	PV_IR_DECODE_PROTOCOL_11
 	PV_IR_DECODE_PROTOCOL_12
-	PV_IR_DECODE_PROTOCOL_90 //Add additional 13, 14 etc. above this
+	PV_IR_DECODE_PROTOCOL_13
+	PV_IR_DECODE_PROTOCOL_14
+	PV_IR_DECODE_PROTOCOL_90 //Add additional 15, 16 etc. above this
 	PV_IR_DECODE_PROTOCOL_91
 	PV_IR_DECODE_PROTOCOL_92
 	PV_IR_DECODE_HASH	//Must be last one. 
@@ -165,7 +179,9 @@ public:
 		IR_DECODE_PROTOCOL_10
 		IR_DECODE_PROTOCOL_11
 		IR_DECODE_PROTOCOL_12
-    IR_DECODE_PROTOCOL_90 //Add additional 13, 14 etc. above this
+		IR_DECODE_PROTOCOL_13
+		IR_DECODE_PROTOCOL_14
+    IR_DECODE_PROTOCOL_90 //Add additional 15, 16 etc. above this
 		IR_DECODE_PROTOCOL_91
 		IR_DECODE_PROTOCOL_92
 	  IR_DECODE_HASH	//Must be last one. 
@@ -188,7 +204,9 @@ class IRsend:
 	PV_IR_SEND_PROTOCOL_10
 	PV_IR_SEND_PROTOCOL_11
 	PV_IR_SEND_PROTOCOL_12
-  PV_IR_SEND_PROTOCOL_90 //Add additional 13, 14 etc. above this
+	PV_IR_SEND_PROTOCOL_13
+	PV_IR_SEND_PROTOCOL_14
+  PV_IR_SEND_PROTOCOL_90 //Add additional 15, 16 etc. above this
 	PV_IR_SEND_PROTOCOL_91
 	PV_IR_SEND_PROTOCOL_92
 	PV_IR_SEND_RAW	//Must be last one.
@@ -209,7 +227,9 @@ public:
 			IR_SEND_PROTOCOL_10
 			IR_SEND_PROTOCOL_11
 			IR_SEND_PROTOCOL_12
-			IR_SEND_PROTOCOL_90 //Add additional 13, 14 etc. above this 
+			IR_SEND_PROTOCOL_13
+			IR_SEND_PROTOCOL_14
+			IR_SEND_PROTOCOL_90 //Add additional 15, 16 etc. above this 
 			IR_SEND_PROTOCOL_91
 			IR_SEND_PROTOCOL_92
 			IR_SEND_RAW	//Must be last one.

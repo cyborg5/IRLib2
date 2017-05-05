@@ -18,7 +18,7 @@
  */
 
 #ifndef IRLIB_ALL_H
-#define IRLIB_ALl_H
+#define IRLIB_ALL_H
 #include <IRLibDecodeBase.h>
 #include <IRLibSendBase.h>
 #include <IRLib_P01_NEC.h>

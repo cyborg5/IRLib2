@@ -1,4 +1,4 @@
-/* IRLib_P09_Unsupported.h
+/* IRLib_P90_Unsupported.h
  * Part of IRLib Library for Arduino receiving, decoding, and sending
  * infrared signals. See COPYRIGHT.txt and LICENSE.txt for more information.
  */
@@ -44,7 +44,7 @@ class IRsendUnsupported: public virtual IRsendBase {
 class IRdecodeUnsupported: public virtual IRdecodeBase {
   public:
     bool decode(void) {
-      IRLIB_ATTEMPT_MESSAGE(F("G.I.cable"));
+      IRLIB_ATTEMPT_MESSAGE(F("Unsupported"));
       // Check for repeat
       if (recvGlobal.decodeLength == 4 && MATCH(recvGlobal.decodeBuffer[1], 490*18) && MATCH(recvGlobal.decodeBuffer[2],2205)
               && MATCH(recvGlobal.decodeBuffer[3],490)) {
@@ -62,4 +62,4 @@ class IRdecodeUnsupported: public virtual IRdecodeBase {
 
 #define IRLIB_HAVE_COMBO
 
-#endif //IRLIB_PROTOCOL_09_H
+#endif //IRLIB_PROTOCOL_90_H

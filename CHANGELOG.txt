@@ -1,3 +1,9 @@
+Version 2.06 May 5, 2017 
+  Added protocol 12 CYKM. A protocol designed by me Chris Young
+    to facilitate transmission and reception of keyboard and
+    mouse commands. Some documentation in the files. More
+    detailed documentation will be available in the manual
+    soon.
 Version 2.05 April 30, 2017 
   Added support for Adafruit Circuit Playground Express with
     SAMD 21 processor using its built-in IR receiver and transmitter.
