@@ -50,22 +50,20 @@
 class IRsendDirecTV: public virtual IRsendBase {
   public:
     IRsendDirecTV(void):longLeadOut(true){};
-    void send(uint32_t data, bool first=true, uint8_t khz=38);
+    void send(uint32_t data, bool first=true, uint8_t khz=38) {
+      enableIROut(khz);
+      if(first) mark(6000); else mark(3000); 
+      space(1200);//Send header
+      for (uint8_t i = 0; i < 8; i++) {
+        if (data & 0x8000) mark(1200); else mark(600);  
+        data <<= 1;
+        if (data & 0x8000) space(1200); else space(600);
+        data <<= 1;
+      };
+      mark(600);  
+      space(longLeadOut?50*600:15*600);
+    };
     bool longLeadOut;
-};
-
-void IRsendDirecTV::send(uint32_t data, bool first, uint8_t khz) {
-  enableIROut(khz);
-  if(first) mark(6000); else mark(3000); 
-  space(1200);//Send header
-  for (uint8_t i = 0; i < 8; i++) {
-    if (data & 0x8000) mark(1200); else mark(600);  
-    data <<= 1;
-    if (data & 0x8000) space(1200); else space(600);
-    data <<= 1;
-  };
-  mark(600);  
-  space(longLeadOut?50*600:15*600);
 };
 #endif  //IRLIBSENDBASE_H
 

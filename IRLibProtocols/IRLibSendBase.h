@@ -13,7 +13,7 @@
 #ifndef IRLIBSENDBASE_H
 #define IRLIBSENDBASE_H
 
-#include <IRLibProtocols.h>
+#include "IRLibProtocols.h"
 
 class IRsendBase {
 public:

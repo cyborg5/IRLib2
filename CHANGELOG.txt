@@ -1,3 +1,7 @@
+Version 2.07 May 5, 2017 
+  Fixed problem with dumpResults related to CYKM.
+  Miscellaneous changes to facilitate integration into
+    Adafruit_CircuitPlayground library.
 Version 2.06 May 5, 2017 
   Added protocol 12 CYKM. A protocol designed by me Chris Young
     to facilitate transmission and reception of keyboard and

@@ -186,7 +186,17 @@ public:
 		IR_DECODE_PROTOCOL_92
 	  IR_DECODE_HASH	//Must be last one. 
 		return false;
-	}
+	};
+#ifdef IRLIB_PROTOCOL_12_H
+  void dumpResults(bool verbose=true) {
+    if(protocolNum==12) {
+      IRdecodeCYKM::dumpResults();
+      if(verbose)IRdecodeBase::dumpResults(true);
+    } else {
+      IRdecodeBase::dumpResults(verbose);
+    }
+  }
+#endif
 };
 #endif //IRLIBDECODEBASE_H
 

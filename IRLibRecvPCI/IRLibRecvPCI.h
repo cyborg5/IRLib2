@@ -23,6 +23,8 @@
 
 class IRrecvPCI: public IRrecvBase {
 public:
+  IRrecvPCI(void){};  //Use only when receiver object is part of larger object. 
+                      // Still must initialize using constructor below.
   IRrecvPCI(uint8_t pin);
   void enableIRIn(void); //call to initialize or resume receiving
   bool getResults(void); //returns true if new frame of data has been received
