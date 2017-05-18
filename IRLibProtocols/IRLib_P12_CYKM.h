@@ -255,6 +255,8 @@ class IRdecodeCYKM: public virtual IRdecodeBase {
     };
     uint8_t mouseSpeed;
     uint8_t toggleData;
+    uint16_t cmdType;
+    uint16_t cmdData;
   private:
     void showMods(void){
       if(value & CYKM_SHIFT) Serial.print(F(" shift"));
@@ -275,7 +277,6 @@ class IRdecodeCYKM: public virtual IRdecodeBase {
       cmdData= value & 0xff; //lowest order 8 bits command data
       //To get Shift,Control,Alt, GUI modifiers do (value & CYKM_SHIFT) etc.
     };
-    uint16_t cmdType, cmdData;
 };
 
 #endif //IRLIBDECODEBASE_H

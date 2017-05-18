@@ -84,7 +84,7 @@ class IRdecodeRCMM: public virtual IRdecodeBase {
       if (!MATCH(recvGlobal.decodeBuffer[2],RCMM_ZERO)) return HEADER_SPACE_ERROR(RCMM_ZERO);
       offset=3; uint32_t data=0;
       while (offset < (recvGlobal.decodeLength-1)) {
-        if (!MATCH(recvGlobal.decodeBuffer[offset],RCMM_DATA_MARK)) return DATA_MARK_ERROR(RCMM_DATA_MARK);
+        if (!ABS_MATCH(recvGlobal.decodeBuffer[offset],RCMM_DATA_MARK,RCMM_TOLERANCE)) return DATA_MARK_ERROR(RCMM_DATA_MARK);
         offset++;
         if (ABS_MATCH(recvGlobal.decodeBuffer[offset],RCMM_ZERO, RCMM_TOLERANCE) ) { //Logical "0"
           data <<= 2;

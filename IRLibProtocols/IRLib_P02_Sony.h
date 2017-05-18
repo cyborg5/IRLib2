@@ -30,7 +30,7 @@ class IRsendSony: public virtual IRsendBase {
   public:
     void send(uint32_t data, uint8_t nbits) {
       for(uint8_t i=0; i<3;i++){
-        sendGeneric(data,nbits, 600*4, 600, 600*2, 600, 600, 600, 40, false,((nbits==8)? 22000:45000)); 
+        sendGeneric(data,nbits, 600*4, 600, 600*2, 600, 600, 600, 40, false,45000); 
       }
     }
 };

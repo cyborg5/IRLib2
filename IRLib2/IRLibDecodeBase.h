@@ -24,6 +24,8 @@ public:
   bool decodeGeneric(uint8_t expectedLength, uint16_t headMark, uint16_t headSpace,
                      uint16_t markData, uint16_t spaceOne, uint16_t spaceZero);
   void dumpResults(bool verbose=true);//full dump of all timing values
+  bool MATCH(int16_t val,int16_t expected);
+  bool ABS_MATCH(int16_t val,int16_t expected,int16_t tolerance);
 protected:
   virtual void resetDecoder(void);   // Initializes the decoder
   bufIndex_t offset;                 // Index into decodeBuffer used various places
@@ -66,25 +68,6 @@ protected:
 #define TOPBIT 0x80000000
 #define PERCENT_TOLERANCE 25  // percent tolerance in measurements
 #define DEFAULT_ABS_TOLERANCE 75 //absolute tolerance in microseconds
-
-/* 
- * These revised MATCH routines allow you to use either percentage or absolute tolerances.
- * Use ABS_MATCH for absolute and PERC_MATCH for percentages. The original MATCH macro
- * is controlled by the IRLIB_USE_PERCENT definition a few lines above.
- */
- 
-#define PERCENT_LOW(us) (unsigned int) (((us)*(1.0 - PERCENT_TOLERANCE/100.)))
-#define PERCENT_HIGH(us) (unsigned int) (((us)*(1.0 + PERCENT_TOLERANCE/100.) + 1))
-
-#define ABS_MATCH(v,e,t) ((v) >= ((e)-(t)) && (v) <= ((e)+(t)))
-#define PERC_MATCH(v,e) ((v) >= PERCENT_LOW(e) && (v) <= PERCENT_HIGH(e))
-
-#ifdef IRLIB_USE_PERCENT
-#define MATCH(v,e) PERC_MATCH(v,e)
-#else
-#define MATCH(v,e) ABS_MATCH(v,e,DEFAULT_ABS_TOLERANCE)
-#endif
-
 /* If you insert #define IRLIB_TRACE in your sketch before including this file,
  * various debugging routines will be enabled in the dumpResults() method.
  */

@@ -1,3 +1,8 @@
+Version 2.08 May 18, 2017 
+  Converted MATCH and ABS_MATCH from macros to methods saving
+    over 1K of program space on "dump.ino" for example.
+  Changed the extent of lead out on Sony 8 protocol
+  Made cmdType and cmdData in CYKM protocol public
 Version 2.07 May 5, 2017 
   Fixed problem with dumpResults related to CYKM.
   Miscellaneous changes to facilitate integration into
