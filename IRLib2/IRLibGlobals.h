@@ -24,7 +24,7 @@
  * so that the index into the array can remain 8 bits. This library can handle larger 
  * arrays however it will make your code longer in addition to taking more RAM.
  */
-#define RECV_BUF_LENGTH 100
+#define RECV_BUF_LENGTH 140
 #if (RECV_BUF_LENGTH > 255)
 	typedef uint16_t bufIndex_t;
 #else
