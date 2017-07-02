@@ -61,14 +61,14 @@
 //#define IR_SEND_PWM_PIN 6
 //#define IR_SEND_PWM_PIN 7
 //#define IR_SEND_PWM_PIN 8
-//#define IR_SEND_PWM_PIN 9
+#define IR_SEND_PWM_PIN 9
 //#define IR_SEND_PWM_PIN 10
 //#define IR_SEND_PWM_PIN 11
-#define IR_SEND_PWM_PIN 12
+//#define IR_SEND_PWM_PIN 12
 //#define IR_SEND_PWM_PIN 13
 //Override default for Adafruit Circuit Playground Express
 #ifdef ADAFRUIT_CIRCUITPLAYGROUND_M0 
-  #define IR_SEND_PWM_PIN 29
+  #define IR_SEND_PWM_PIN 25
 #endif
 //Choose which timer counter to use for the 50 microsecond interrupt
 //Un-comment only one of these.
@@ -185,7 +185,7 @@
   #define IR_MUX_EF PORT_PMUX_PMUXO_F 
   #define IR_CCx CC7
   #define IR_CCn 7
-#elif (IR_SEND_PWM_PIN==29)//Adafruit Circuit Playground Express only
+#elif (IR_SEND_PWM_PIN==25)//Adafruit Circuit Playground Express only
   //PA23 E:TC4-WO[1] F:TCC0-WO[5]
   #define IR_MUX_EF PORT_PMUX_PMUXO_F 
   #define IR_CCx CC5
