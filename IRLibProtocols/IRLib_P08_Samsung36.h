@@ -45,7 +45,7 @@ class IRsendSamsung36: public virtual IRsendBase {
       space(68);                  //Send tiny break
       data <<= 12;
       putBits (data, 8);mark(500); //Final eight bits and one stop bit
-      space(118*500);				//Lead out is 118 times the base time 500
+      space(118U*500U);				//Lead out is 118 times the base time 500
     };
   private:
     /* Because not all of the data bits are contiguous in the stream,

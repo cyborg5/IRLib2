@@ -1,3 +1,5 @@
+Version 2.0.10 July 17, 2017 
+  Unsigned manager overflow problem in Samsung36
 Version 2.09 July 2, 2017 
   Updated pin numbers for Circuit Playground Express
   Added 8-bit Sony test to examples/pattern.ino
