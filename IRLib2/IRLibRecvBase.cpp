@@ -46,7 +46,7 @@ void IRrecvBase::init(void) {
 }
 
 // Turn on or off a blinking LED which indicates signal received. Usually pin 13.
-void blink13(bool enableBlinkLED){
+void IRrecvBase::blink13(bool enableBlinkLED) {
 #if (BLINKLED>0)
   pinMode(BLINKLED,OUTPUT);
   recvGlobal.enableBlinkLED=enableBlinkLED;
