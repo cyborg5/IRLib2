@@ -35,5 +35,6 @@
       "+<*>",
       "-<IRLib2/examples>"
     ]
-  }
+  },
+  "examples": "IRLib2/examples/*/*.ino"
 }
