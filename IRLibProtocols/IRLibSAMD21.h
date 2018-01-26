@@ -53,7 +53,8 @@
  * but if there are hardware conflicts with other libraries, you can change these values.
  */
 //Choose PWM output pin number from among the following
-//Un-comment only one of these. 
+//Un-comment only one of these. Use these for Arduino Zero
+//Feather M0 and other generic SAMD21 boards.
 //#define IR_SEND_PWM_PIN 2
 //#define IR_SEND_PWM_PIN 3
 //#define IR_SEND_PWM_PIN 4
@@ -69,6 +70,22 @@
 //Override default for Adafruit Circuit Playground Express
 #ifdef ADAFRUIT_CIRCUITPLAYGROUND_M0 
   #define IR_SEND_PWM_PIN 25
+#endif
+//Override default for Adafruit Trinket M0 and select only available pins.
+//NOTE: Pin 1 cannot be used for output.
+//WARNING: pin 3 and 4 should work but don't. Will have to resolve later.
+#ifdef ADAFRUIT_TRINKET_M0
+#define IR_SEND_PWM_PIN 0
+//#define IR_SEND_PWM_PIN 2
+//#define IR_SEND_PWM_PIN 3
+//#define IR_SEND_PWM_PIN 4
+#endif
+//Override default for Adafruit Gemma M0 and select only available pins.
+//NOTE: Pin 1 cannot be used for output.
+//WARNING: pin 2 should work but doesn't. Will have to resolve later.
+#ifdef ADAFRUIT_GEMMA_M0
+#define IR_SEND_PWM_PIN 0
+//#define IR_SEND_PWM_PIN 2
 #endif
 //Choose which timer counter to use for the 50 microsecond interrupt
 //Un-comment only one of these.
@@ -105,24 +122,62 @@
 #define CC7 CC3
 
 //Set other values based on pin number
-#if (IR_SEND_PWM_PIN==2)
+#if (IR_SEND_PWM_PIN==0)
+  //NOTE: Adafruit Trinket M0 only
+  #if defined(ADAFRUIT_TRINKET_M0)
+    //PA08 E:TCC0-WO[0] F:TCC1-WO[2]
+    #define IR_MUX_EF PORT_PMUX_PMUXE_E
+    #define IR_CCx CC0
+    #define IR_CCn 0
+  #elif defined(ADAFRUIT_GEMMA_M0)
+    //NOTE: Adafruit Gemma M0 only
+    //PA04 E:TCC0W0[0] F:--
+    #define IR_MUX_EF PORT_PMUX_PMUXE_E
+    #define IR_CCx CC0
+    #define IR_CCn 0
+  #else
+    #error "Pin 0 only available on Trinket M0 and Gemma M0"
+  #endif
+#elif (IR_SEND_PWM_PIN==2)
   //NOTE: Arduino M0 Pro only
   #if defined(ARDUINO_SAM_ZERO)
     //PA08 E:TCC0-WO[0] F:TCC1-WO[2]
     #define IR_MUX_EF PORT_PMUX_PMUXE_E
     #define IR_CCx CC0
     #define IR_CCn 0
-  #else
-    #error "Pin 2 only available on Arduino M0 Pro"
+  #elif (ADAFRUIT_TRINKET_M0)
+    //PA09 E:TCC0-WO[1] F:TCC1-WO[3]
+    #define IR_MUX_EF PORT_PMUX_PMUXO_E 
+    #define IR_CCx CC1
+    #define IR_CCn 1
+  #elif (ADAFRUIT_GEMMA_M0)
+    //PA05 E:TCC0-WO[1] F:--
+    #define IR_MUX_EF PORT_PMUX_PMUXO_E 
+    #define IR_CCx CC1
+    #define IR_CCn 1
+  #else  
+    #error "Pin 2 only available on Arduino M0 Pro, Trinket M0 and Gemma M0"
   #endif
 #elif (IR_SEND_PWM_PIN==3)
-  //PA09 E:TCC0-WO[1] F:TCC1-WO[3]
-  #define IR_MUX_EF PORT_PMUX_PMUXO_E 
-  #define IR_CCx CC1
-  #define IR_CCn 1
+  #if defined(ADAFRUIT_TRINKET_M0)
+    //PA07 E:TCC1-WO[1] F:--
+    #define IR_MUX_EF PORT_PMUX_PMUXO_E 
+    #define IR_CCx CC1
+    #define IR_CCn 1
+  #else //all other boards
+    //PA09 E:TCC0-WO[1] F:TCC1-WO[3]
+    #define IR_MUX_EF PORT_PMUX_PMUXO_E 
+    #define IR_CCx CC1
+    #define IR_CCn 1
+  #endif
 #elif (IR_SEND_PWM_PIN==4)
+  #if defined(ADAFRUIT_TRINKET_M0)
+    //PA06 E:TCC1-WO[0] F:--
+    #define IR_MUX_EF PORT_PMUX_PMUXE_E 
+    #define IR_CCx CC0
+    #define IR_CCn 0
   //Arduino M0 Pro swaps pins 2 and 4
-  #if(ARDUINO_SAM_ZERO)
+  #elif(ARDUINO_SAM_ZERO)
     //Arduino M0 Pro
     //PA09 E:TC3-WO[0] F:TCC0-WO[4]
     #define IR_MUX_EF PORT_PMUX_PMUXE_F 

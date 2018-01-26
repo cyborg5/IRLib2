@@ -1,3 +1,7 @@
+Version 2.0.11 January 26, 2018 
+  Added support for Adafruit Trinket M0 and Adafruit Gemma M0 however there are known
+    limitations on certain pin numbers. See SAMD21.txt for details.
+  Includes previously merged fixed to problem with buffer sizes greater than 255
 Version 2.0.10 July 17, 2017 
   Unsigned manager overflow problem in Samsung36
 Version 2.09 July 2, 2017 

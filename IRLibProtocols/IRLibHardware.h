@@ -78,7 +78,7 @@
 	#define IR_SEND_TIMER2		14
   
 /* Arduino Zero, M0, M0 Pro, Feather M0 etc. */
-#elif defined (__SAMD21G18A__)
+#elif defined (__SAMD21G18A__) || defined(__SAMD21E18A__)
 // All of the settings can be found in IRLibSAMD21.h
   #include "IRLibSAMD21.h"
   /* Pinoccio Scout */
@@ -151,7 +151,7 @@
 		#define IR_RECV_TIMER4_HS
 	#elif defined(IR_SEND_TIMER5)
 		#define IR_RECV_TIMER5
-	#elif defined(__SAMD21G18A__)//handle this one a little differently
+	#elif defined(__SAMD21G18A__) || defined(__SAMD21E18A__)//handle this one a little differently
     #define IR_RECV_TC3
   #else
 		#error "Unable to set IR_RECV_TIMER"

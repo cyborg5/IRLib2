@@ -10,7 +10,7 @@
 
 /* See IRLibSAMD21.h for details about this implementation.
  */
-#if defined (__SAMD21G18A__)
+#if defined (__SAMD21G18A__) || (__SAMD21E18A__)
 #include "IRLibHardware.h"
 
 //Save some typing
