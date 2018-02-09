@@ -73,7 +73,6 @@
 #endif
 //Override default for Adafruit Trinket M0 and select only available pins.
 //NOTE: Pin 1 cannot be used for output.
-//WARNING: pin 3 and 4 should work but don't. Will have to resolve later.
 #ifdef ADAFRUIT_TRINKET_M0
 #define IR_SEND_PWM_PIN 0
 //#define IR_SEND_PWM_PIN 2
@@ -82,7 +81,6 @@
 #endif
 //Override default for Adafruit Gemma M0 and select only available pins.
 //NOTE: Pin 1 cannot be used for output.
-//WARNING: pin 2 should work but doesn't. Will have to resolve later.
 #ifdef ADAFRUIT_GEMMA_M0
 #define IR_SEND_PWM_PIN 0
 //#define IR_SEND_PWM_PIN 2
@@ -108,12 +106,8 @@
   #endif
 #endif
 
-//Pins 8 and 9 use TCC1 and all others use TCC0
-#if ( (IR_SEND_PWM_PIN==8) || (IR_SEND_PWM_PIN==9) )
-  #define IR_TCCx TCC1
-#else
-  #define IR_TCCx TCC0
-#endif
+//Most pins use TCC0. We will override if different
+#define IR_TCCx TCC0
 
 //Although there are 8 WO there are only 4 CC
 #define CC4 CC0
@@ -164,6 +158,7 @@
     #define IR_MUX_EF PORT_PMUX_PMUXO_E 
     #define IR_CCx CC1
     #define IR_CCn 1
+    #define IR_TCCx TCC1
   #else //all other boards
     //PA09 E:TCC0-WO[1] F:TCC1-WO[3]
     #define IR_MUX_EF PORT_PMUX_PMUXO_E 
@@ -176,6 +171,7 @@
     #define IR_MUX_EF PORT_PMUX_PMUXE_E 
     #define IR_CCx CC0
     #define IR_CCn 0
+    #define IR_TCCx TCC1
   //Arduino M0 Pro swaps pins 2 and 4
   #elif(ARDUINO_SAM_ZERO)
     //Arduino M0 Pro
@@ -215,11 +211,13 @@
   #define IR_MUX_EF PORT_PMUX_PMUXE_E 
   #define IR_CCx CC0
   #define IR_CCn 0
+  #define IR_TCCx TCC1
 #elif (IR_SEND_PWM_PIN==9)
   //PA07 E:TCC1-WO[1] F:--
   #define IR_MUX_EF PORT_PMUX_PMUXO_E 
   #define IR_CCx CC1
   #define IR_CCn 1
+  #define IR_TCCx TCC1
 #elif (IR_SEND_PWM_PIN==10)
   //PA18 E:TC3-WO[0] F:TCC0-WO[2]
   #define IR_MUX_EF PORT_PMUX_PMUXE_F

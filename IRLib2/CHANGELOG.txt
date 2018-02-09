@@ -1,3 +1,7 @@
+Version 2.0.12 February 9, 2018 
+  Fix problems with certain pins on Trinket M0. Problem with Gemma M0 didn't exist.
+    It worked all along but my testing failed.
+    Many thanks to LadyAda for identifying problem.
 Version 2.0.11 January 26, 2018 
   Added support for Adafruit Trinket M0 and Adafruit Gemma M0 however there are known
     limitations on certain pin numbers. See SAMD21.txt for details.
