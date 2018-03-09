@@ -1,3 +1,5 @@
+Version 2.0.13 March 9, 2018 
+  Added IoT_IR Internet of Things IR remote example for use with Adafruit Feather M0 Wi-Fi
 Version 2.0.12 February 9, 2018 
   Fix problems with certain pins on Trinket M0. Problem with Gemma M0 didn't exist.
     It worked all along but my testing failed.

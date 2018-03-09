@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<style>
+			.error{ color:#ff0000; }
+			body {font-family:Arial, Helvetica, sans-serif;}
+			h1 {text-align: center;}
+			.MyButtons {background-color:#d0ffff; width:59px; height:59px;
+			text-align: center; vertical-align: middle; font-weight: bold;
+			border-width:5px;border-color: #eee;border-radius:15px;
+			border-style:outset;}
+			option{white-space:pre;}
+			home#KeyMessage {white-space:pre;}
+			.Big {font-size:20pt}
+			.Tall{line-height:24pt}
+		</style>
+		<script>
+			//URL of the device
+			my_url="http://192.168.1.105/"; //Edit this IP address for your device
+			//handles to various parts of the screen. Initialized in myInitialize()
+			var RemoteErr, RemoteTable, KeyMessage;
+			var DisplaySymbols;
+			var HotKeys= [];
+			//These codes are for a BrightHouse/Spectrum table box and a Samsung TV
+			var Button= [//object containing all buttons
+				[//object containing row 0
+					[7,0xe0e0e01f,0, "V+",187],//Object containing button 1
+					[5,0x37c906,0, "|&#9668;&#9668;",74],//jump back "J"
+					[5,0x37291a,0, "&#9668;&#9668;",36],//rewind
+					[5,0x37990c,0, "&#9658;",32],//play
+					[5,0x36293a,0, "&#9658;&#9658;",35],//fast-forward
+					[5,0x36113d,0, "1",49],
+					[5,0x37111d,0, "2",50],
+					[5,0x36912d,0, "3",51]
+				],
+				[//row 1
+					[7,0xe0e0d02f,0, "V-",189],
+					[5,0x36b129,0, "&#9658;&#9658;|",78],//live "N"
+					[5,0x375914,0, "<span class='error Big'>&#9679;</span>",82],//record "R"
+					[5,0x374117,0, "||",80],
+					[5,0x365934,0, "<span class='Big'>&#9632;</span>",83],//Stop
+					[5,0x37910d,0, "4",52],
+					[5,0x365135,0, "5",53],
+					[5,0x375115,0, "6",54]
+				],
+				[//row 2
+					[7,0xe0e0f00f,0, "Mute",81],
+					[5,0x36c127,0, "Guide",71],
+					[5,0x37d904,0, "PgDn", 34],
+					[5,0x36812f,0, "<span class=' Big'>&#8657;</span>",38],//up arrow
+					[5,0x36d924,0, "PgUp",33],
+					[5,0x36d125,0, "7",55],
+					[5,0x37d105,0, "8",56],
+					[5,0x363139,0, "9",57]
+				],
+				[//row 3
+					[5,0x377111,0, "Ch+",85],
+					[5,0x366932,0, "Exit",88],
+					[5,0x37810f,0, "<span class=' Big'>&#8656;</span>", 37],//left arrow
+					[5,0x366133,0, "OK",13],
+					[5,0x364137,0, "<span class=' Big'>&#8658;</span>",39],//right arrow
+					[5,0x36213b,0, "Info",73],
+					[5,0x373119,0, "0",48],
+					[5,0x36b928,0, "Zoom",90]
+				],
+				[//row 4I
+					[5,0x36f121,0, "Ch-",68],
+					[5,0x36e123,0, "Prev",86],
+					[5,0x373918,0, "Menu",77],
+					[5,0x37a10b,0, "<span class=' Big'>&#8659;</span>",40],//down arrow
+					[5,0x36c926,0, "List",76],
+					[5,0x37e902,0, "A",65],
+					[5,0x36193c,0, "B",66],
+					[5,0x37191c,0, "C",67]
+				],
+				[//row 5
+					[5,0x37b908,0, "PIP",84],
+					[5,0x377910,0, "PIP<br>Move",220],
+					[5,0x367930,0, "PIP<br>Swap",191],
+					[5,0x37f900,0, "PIP-",188],
+					[5,0x36e922,0, "PIP+",190],
+					[5,0x37f101,0, "Fav",70],
+					[5,0x37c107,0, "Cbl<br>Pwr",0],
+					[7,0x0e0e040bf,0, "TV<br>Pwr",0]
+				],
+				[//row 6
+					[5,0x0e163d,0, "Day-",219],
+					[5,0x0fe603,0, "Day+",221]
+				],
+			/*
+				[//row 
+					[0,0x0,0, "",0],
+					[0,0x0,0, "",0],
+					[0,0x0,0, "",0],
+					[0,0x0,0, "",0],
+					[0,0x0,0, "",0]
+				]
+			*/
+			]
+
+			function myDisplayErr(handle,s,err) {
+				handle.innerHTML= "<span class='error'>Error during "+s+err.code
+								+" '"+err.message+"'</span>";
+			}
+
+			function myInitialize() {
+				window.resizeTo(550,800);
+				window.moveTo(0, 0)
+
+				RemoteErr=document.getElementById ("RemoteErr");
+				RemoteTable=document.getElementById("RemoteTable");
+				KeyMessage=document.getElementById("KeyMessage");
+				document.onkeydown= function(e){KeyHandler(e);};
+				SetupHotKeys ();
+				DisplaySymbols= false;
+				ShowRemote ();
+			}
+				 
+			function KeyHandler (e) {
+			var x,r,c,s;
+				e = e || window.event;
+				if(e.which) x=e.which; else x=e.keyCode;
+				if(x==27) {DisplaySymbols=!DisplaySymbols;ShowRemote(); return;}
+				s = TranslateSpecial(x);
+				var t="You pressed '"+s+"' ("+x+")";
+				if(HotKeys[x][0]>=0)
+					SendButton(t
+						//+" which corresponds to"
+						,HotKeys[x][0],HotKeys[x][1]);
+				 else
+					KeyMessage.innerHTML=t;
+					//RemoteErr.innerHTML= "";
+				RemoteErr.innerText= "Keypress handled"; 
+			}
+
+			function TranslateSpecial(x) {
+				switch(x) {
+					case 187:s="+"; break; case 189:s="-"; break;
+					case 36:s="HOME"; break; case 35:s="END"; break;
+					case 38:s="UPAR"; break; case 40:s="DNAR"; break;
+					case 37:s="LFAR"; break; case 39:s="RTAR"; break;
+					case 33:s="PGUP"; break; case 34:s="PGDN"; break;
+					case 13:s="ENTER"; break; case 32:s="SPACE"; break;
+					case 219:s="["; break; case 221:s="]"; break;
+					case 188:s=","; break; case 190:s="."; break;
+					case 191:s="/"; break; case 120:s="|"; break;
+					case 20:s="ESC"; break;
+					default:s= String.fromCharCode(x);
+				}
+				return s;
+			}
+			function SetupHotKeys () {
+				for(var k=0;k<256;k++) HotKeys[k]=[-1,-1];
+			}
+			function ShowRemote () {
+				var r,c;
+				RemoteTable.innerHTML= "";
+				for(r=0;r< Button.length;r++) {
+					var TR= document.createElement ("tr");
+					var TD= "";
+					for(var c=0;c<Button[r].length;c++) {
+						TD=TD+"<td class='MyButtons' onclick='DoButton("+r+","+c+")'>"+
+							(DisplaySymbols?TranslateSpecial(Button[r][c][4]):Button[r][c][3])
+							+"</td>";
+						if(Button[r][c][4]>0) HotKeys[Button[r][c][4]]=[r,c];
+					}
+					TR.innerHTML =TD;
+					RemoteTable.appendChild(TR);
+				}
+			}
+			function DoButton (r,c) {
+				SendButton("You clicked",r,c);
+			}
+			function getRest(url,cb) {
+				var Response;
+				var Request = new XMLHttpRequest();
+				Request.onreadystatechange = function() {
+					if(Request.readyState == 4) {
+						if(1) {
+							var data= {};
+							if (Request.status ==200) data=JSON.parse(Request.responseText);
+							Response= {"status":Request.status,"statusText":Request.statusText,"data":data};
+						} else {
+							Response= Request.responseText;
+						};				
+						cb(Response);
+					}
+				}
+				Request.open("PUT", url, true);
+				Request.send();
+			}
+
+			function SendButton (t,r,c) {
+				var B= Button[r][c];
+				KeyMessage.innerHTML=t+" button("+r+","+c+")";
+				if(B[0]==0) return;
+				RemoteErr.innerText= "Attempting sending..."; 
+				getRest (my_url+"irsend/"+B[0]+"/"+B[1]+"/"+B[2]+"/",
+					function (Response) {
+						RemoteErr.innerText=JSON.stringify(Response);
+						//RemoteErr.innerText=Response;
+					}
+				)
+			}
+		</script>
+	</head>
+	<body>
+		<h1>Cable and TV</h1>
+		<table><tr height=80><td>
+			<div id="KeyMessage"> &nbsp;</div>
+			<div id="RemoteErr">&nbsp;</div>
+		</td></tr></table>
+		<table id="RemoteTable">
+		</table>
+		<script>myInitialize(); </script>
+	</body>
+</html>
