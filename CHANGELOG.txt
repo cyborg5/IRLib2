@@ -1,3 +1,6 @@
+Version 2.0.14 March 10, 2018 
+  Added support for Arduino MKR 1000. Note IoT_IR example also works with this board. 
+    See SAMD21.txt for details about available output and input pins. Default output pin 6.
 Version 2.0.13 March 9, 2018 
   Added IoT_IR Internet of Things IR remote example for use with Adafruit Feather M0 Wi-Fi
 Version 2.0.12 February 9, 2018 

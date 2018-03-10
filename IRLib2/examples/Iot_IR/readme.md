@@ -1,11 +1,12 @@
 ﻿# IoT_IR Internet of Things Infrared Remote
 
-This folder contains a sample implementation of an Internet of things IR remote using Adafruit Feather M0 Wi-Fi.
+This folder contains a sample implementation of an Internet of things IR remote using Adafruit Feather M0 Wi-Fi and Arduino MKR 1000.
 
-We will eventually implement this on other Wi-Fi boards such as Arduino MKR 1000.
-
-Recommended that you familiarize yourself with the board before proceeding with this example. See the tutorial at
+Recommended that you familiarize yourself with the board before proceeding with this example. For the Adafruit Feather M0 Wi-Fi the tutorial at
 https://learn.adafruit.com/adafruit-feather-m0-wifi-atwinc1500?view=all
+
+For the Arduino MKR 1000 see the guide at
+https://www.arduino.cc/en/Guide/MKR1000
 
 Go through all of the Wi-Fi examples in that tutorial to make sure that your board is working. You will have to edit the "arduino_secrets.h" file to include your Wi-Fi name and password.
 
@@ -13,7 +14,9 @@ There are two sample pages included in this folder. The file "adafruit_remote.ht
 
 The other sample page is "cable_and_tv.html" which has codes for a BrightHouse/Spectrum cable box using the Panasonic_Old protocol and a Samsung TV using NECx protocol.
 
-You can simply open these files in your computer without actually hosting on a Web server. It has been tested with Internet Explorer and Google Chrome. Explorer will require you to click on a button to enable active X controls. Chrome does not. Note also Explorer will automatically resize and dock the webpage but Chrome does not implement that feature. If
+You can simply open these files in your computer without actually hosting on a Web server. It has been tested with Internet Explorer, Google Chrome, Mozilla Firefox, and Opera Browser. Explorer will require you to click on a button to enable active X controls but the others do not. Note also Explorer will automatically resize and dock the webpage but the others do not implement that feature. 
+
+You will have to edit the source of the html pages to configure your IP address for your device.
 
 You can edit the codes for any remote supported by IRLib2. Each button is defined by 4 values in the table beginning at line 26. For example the first button in the Adafruit remote example reads:
 

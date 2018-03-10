@@ -85,6 +85,21 @@
 #define IR_SEND_PWM_PIN 0
 //#define IR_SEND_PWM_PIN 2
 #endif
+//Override default for Arduino MKR 1000 and select only available pins.
+#ifdef ARDUINO_SAMD_MKR1000
+//#define IR_SEND_PWM_PIN 0	
+//#define IR_SEND_PWM_PIN 1 
+//#define IR_SEND_PWM_PIN 2 
+//#define IR_SEND_PWM_PIN 3 
+//#define IR_SEND_PWM_PIN 4 
+//#define IR_SEND_PWM_PIN 5 
+#define IR_SEND_PWM_PIN 6 //default
+//#define IR_SEND_PWM_PIN 7 
+//#define IR_SEND_PWM_PIN 8 
+//#define IR_SEND_PWM_PIN 10 //works
+//#define IR_SEND_PWM_PIN 18 //a.k.a. Pin A3
+//#define IR_SEND_PWM_PIN 19 //a.k.a. Pin A4
+#endif
 //Choose which timer counter to use for the 50 microsecond interrupt
 //Un-comment only one of these.
 #define IR_TCn 3
@@ -124,13 +139,26 @@
     #define IR_CCx CC0
     #define IR_CCn 0
   #elif defined(ADAFRUIT_GEMMA_M0)
-    //NOTE: Adafruit Gemma M0 only
     //PA04 E:TCC0W0[0] F:--
     #define IR_MUX_EF PORT_PMUX_PMUXE_E
     #define IR_CCx CC0
     #define IR_CCn 0
+  #elif defined(ARDUINO_SAMD_MKR1000)
+    //PA22 E:TC4W0[0] F:TCC0-WO[4]
+    #define IR_MUX_EF PORT_PMUX_PMUXE_F
+    #define IR_CCx CC4
+    #define IR_CCn 4
   #else
-    #error "Pin 0 only available on Trinket M0 and Gemma M0"
+    #error "Pin 0 only available on Trinket M0, Gemma M0 and MKR 1000"
+  #endif
+#elif (IR_SEND_PWM_PIN==1)
+  #if defined(ARDUINO_SAMD_MKR1000)
+    //PA23 E:TC4W0[1] F:TCC0-WO[5]
+    #define IR_MUX_EF PORT_PMUX_PMUXO_F
+    #define IR_CCx CC5
+    #define IR_CCn 5
+  #else
+    #error "Pin 1 only available on MKR 1000"
   #endif
 #elif (IR_SEND_PWM_PIN==2)
   //NOTE: Arduino M0 Pro only
@@ -149,8 +177,13 @@
     #define IR_MUX_EF PORT_PMUX_PMUXO_E 
     #define IR_CCx CC1
     #define IR_CCn 1
+  #elif defined(ARDUINO_SAMD_MKR1000)
+    //PA10 E:TCC1W0[0] F:TCC0-WO[2]
+    #define IR_MUX_EF PORT_PMUX_PMUXE_F
+    #define IR_CCx CC2
+    #define IR_CCn 2
   #else  
-    #error "Pin 2 only available on Arduino M0 Pro, Trinket M0 and Gemma M0"
+    #error "Pin 2 only available on Arduino M0 Pro, Trinket M0, Gemma M0 and MKR 1000"
   #endif
 #elif (IR_SEND_PWM_PIN==3)
   #if defined(ADAFRUIT_TRINKET_M0)
@@ -159,6 +192,11 @@
     #define IR_CCx CC1
     #define IR_CCn 1
     #define IR_TCCx TCC1
+  #elif defined(ARDUINO_SAMD_MKR1000)
+    //PA11 E:TCC1W0[1] F:TCC0-WO[3]
+    #define IR_MUX_EF PORT_PMUX_PMUXO_F
+    #define IR_CCx CC3
+    #define IR_CCn 3
   #else //all other boards
     //PA09 E:TCC0-WO[1] F:TCC1-WO[3]
     #define IR_MUX_EF PORT_PMUX_PMUXO_E 
@@ -179,6 +217,11 @@
     #define IR_MUX_EF PORT_PMUX_PMUXE_F 
     #define IR_CCx CC4
     #define IR_CCn 4
+  #elif defined(ARDUINO_SAMD_MKR1000)
+    //PB10 E:TC5W0[0] F:TCC0-WO[4]
+    #define IR_MUX_EF PORT_PMUX_PMUXE_F
+    #define IR_CCx CC4
+    #define IR_CCn 4
   #else
     //Arduino Zero
     //PA08 E:TCC0-WO[0] F:TCC1-WO[2]
@@ -187,31 +230,56 @@
     #define IR_CCn 0
   #endif
 #elif (IR_SEND_PWM_PIN==5)
-  //PA15 E:TC3-WO[1] F:TCC0-WO[5]
-  #define IR_MUX_EF PORT_PMUX_PMUXO_F
-  #define IR_CCx CC5
-  #define IR_CCn 5
+  #if defined(ARDUINO_SAMD_MKR1000)
+    //PB11 E:TC5W0[1] F:TCC0-WO[5]
+    #define IR_MUX_EF PORT_PMUX_PMUXO_F
+    #define IR_CCx CC5
+    #define IR_CCn 5
+  #else
+    //PA15 E:TC3-WO[1] F:TCC0-WO[5]
+    #define IR_MUX_EF PORT_PMUX_PMUXO_F
+    #define IR_CCx CC5
+    #define IR_CCn 5
+  #endif
 #elif (IR_SEND_PWM_PIN==6)
-  //PA20 E:TC7-WO[0] F:TCC0-WO[6]
-  #define IR_MUX_EF PORT_PMUX_PMUXE_F
-  #define IR_CCx CC6
-  #define IR_CCn 6
+  #if defined(ARDUINO_SAMD_MKR1000)
+    //PA20 E:TC7W0[0] F:TCC0-WO[6]
+    #define IR_MUX_EF PORT_PMUX_PMUXE_F
+    #define IR_CCx CC6
+    #define IR_CCn 6
+  #else //all other boards
+    //PA20 E:TC7-WO[0] F:TCC0-WO[6]
+    #define IR_MUX_EF PORT_PMUX_PMUXE_F
+    #define IR_CCx CC6
+    #define IR_CCn 6
+  #endif
 #elif (IR_SEND_PWM_PIN==7)
-  //NOTE: Arduino M0 Pro only
   #if defined(ARDUINO_SAM_ZERO)
     //PA08 E:TC7-WO[1] F:TCC0-WO[7]
     #define IR_MUX_EF PORT_PMUX_PMUXO_F
     #define IR_CCx CC7
     #define IR_CCn 7
+  #elif defined(ARDUINO_SAMD_MKR1000)
+    //PA21 E:TC7W0[1] F:TCC0-WO[7]
+    #define IR_MUX_EF PORT_PMUX_PMUXO_F
+    #define IR_CCx CC7
+    #define IR_CCn 7
   #else
-    #error "Pin 7 only available on Arduino M0 Pro"
+    #error "Pin 7 only available on Arduino M0 Pro and MKR 1000"
   #endif
 #elif (IR_SEND_PWM_PIN==8)
-  //PA06 E:TCC1-WO[0] F:--
-  #define IR_MUX_EF PORT_PMUX_PMUXE_E 
-  #define IR_CCx CC0
-  #define IR_CCn 0
-  #define IR_TCCx TCC1
+  #if defined(ARDUINO_SAMD_MKR1000)
+    //PA16 E:TCC2W0[0] F:TCC0-WO[6]
+    #define IR_MUX_EF PORT_PMUX_PMUXE_F
+    #define IR_CCx CC6
+    #define IR_CCn 6
+  #else //all other boards
+    //PA06 E:TCC1-WO[0] F:--
+    #define IR_MUX_EF PORT_PMUX_PMUXE_E 
+    #define IR_CCx CC0
+    #define IR_CCn 0
+    #define IR_TCCx TCC1
+  #endif
 #elif (IR_SEND_PWM_PIN==9)
   //PA07 E:TCC1-WO[1] F:--
   #define IR_MUX_EF PORT_PMUX_PMUXO_E 
@@ -219,10 +287,17 @@
   #define IR_CCn 1
   #define IR_TCCx TCC1
 #elif (IR_SEND_PWM_PIN==10)
-  //PA18 E:TC3-WO[0] F:TCC0-WO[2]
-  #define IR_MUX_EF PORT_PMUX_PMUXE_F
-  #define IR_CCx CC2
-  #define IR_CCn 2
+  #if defined(ARDUINO_SAMD_MKR1000)
+    //PA19 E:TC3W0[1] F:TCC0-WO[3]
+    #define IR_MUX_EF PORT_PMUX_PMUXO_F
+    #define IR_CCx CC3
+    #define IR_CCn 3
+  #else //all other boards
+    //PA19 E:TC3-WO[0] F:TCC0-WO[2]
+    #define IR_MUX_EF PORT_PMUX_PMUXE_F
+    #define IR_CCx CC2
+    #define IR_CCn 2
+  #endif
 #elif (IR_SEND_PWM_PIN==11)
   //PA16 E:TCC2-WO[0] F:TCC0-WO[6]
   #define IR_MUX_EF PORT_PMUX_PMUXE_F 
@@ -243,6 +318,25 @@
   #define IR_MUX_EF PORT_PMUX_PMUXO_F 
   #define IR_CCx CC5
   #define IR_CCn 5
+#elif (IR_SEND_PWM_PIN==18)//a.k.a. Pin A3
+  #if defined(ARDUINO_SAMD_MKR1000)
+    //PA04 E:TCC0-W0[0] F:--
+    #define IR_MUX_EF PORT_PMUX_PMUXE_E
+    #define IR_CCx CC0
+    #define IR_CCn 0
+  #else
+    #error "Pin 18 only available on MKR 1000"
+  #endif
+#elif (IR_SEND_PWM_PIN==19)//a.k.a. Pin for A4
+  #if defined(ARDUINO_SAMD_MKR1000)
+    //PA05 E:TCC0-W0[1] F:--
+    #define IR_MUX_EF PORT_PMUX_PMUXO_E
+    #define IR_CCx CC1
+    #define IR_CCn 1
+  #else
+    #error "Pin 19 only available on MKR 1000"
+  #endif
+ 
 #else 
   #error "Invalid SAMD21 PWM pin"
 #endif
