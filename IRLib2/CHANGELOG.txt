@@ -1,3 +1,7 @@
+Version 2.0.15 April 4, 2018
+  Major rewrite of SAMD21 support makes it easier to add more boards.
+  Updated documentation to include protocol 12 CYKM for keyboard and mouse control.
+  Updated documentation for SAMD21 boards. General reproof reading of entire documentation.
 Version 2.0.14 March 10, 2018 
   Added support for Arduino MKR 1000. Note IoT_IR example also works with this board. 
     See SAMD21.txt for details about available output and input pins. Default output pin 6.
