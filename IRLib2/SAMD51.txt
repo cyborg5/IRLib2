@@ -1,0 +1,7 @@
+SAMD51.txt
+
+Notes on SAMD51 M4 support
+
+IRLib2 now supports the SAMD51 M4 processor on the Adafruit Metro M4. Other M4 platforms will be added soon.
+IR output is available through PWM pins 0-13 and the default output is 9.
+Receiving is available using all three receiver classes IRrecvPCI and IRfreq is available on any pin that supports attacheInterrupt(…) Which is just about everything. IRrecv using the 50 µs timer interrupt is available on any digital input pin. It defaults to using TC3 but you may also select TC4 or TC5 by changing the default value in IRLibProtocols/IRLibSAMD51.h. That fire also allows you to change the default output pin. The general documentation has not yet been updated for this platform but everything you need to know is in this file.

@@ -29,3 +29,4 @@ Do not install them in a single folder such as this…
  
 Supported platforms include most 8-bit AVR Arduino boards such as Arduino Uno, Leonardo, and Mega 256.
 Also supports boards with SAMD 21 processor such as Arduino Zero, Arduino M0 Pro, Adafruit Feather M0, Adafruit Circuit Playground Express, Adafruit Trinket M0, Adafruit Gemma M0, and Arduino MKR 1000. Documentation has been updated to include all new protocols and platforms.
+Now supports SAMD51 M4 processor on the Adafruit Metro M4. See SAMD51.txt for details.

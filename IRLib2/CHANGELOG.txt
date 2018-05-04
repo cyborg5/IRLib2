@@ -1,3 +1,5 @@
+Version 2.0.16 May 3, 2018 
+  Support SAMD51 M4 processor on the Adafruit Metro M4. See SAMD51.txt for details.
 Version 2.0.15 April 4, 2018
   Major rewrite of SAMD21 support makes it easier to add more boards.
   Updated documentation to include protocol 12 CYKM for keyboard and mouse control.
