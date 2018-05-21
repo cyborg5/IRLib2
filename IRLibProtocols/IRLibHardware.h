@@ -81,7 +81,13 @@
 #elif defined (__SAMD21G18A__) || defined(__SAMD21E18A__)
 // All of the settings can be found in IRLibSAMD21.h
   #include "IRLibSAMD21.h"
-  /* Pinoccio Scout */
+
+/* Adafruit Metro M4, Feather M4 and any other SAMD51 boards */
+#elif defined (__SAMD51__) 
+// All of the settings can be found in IRLibSAMD51.h
+  #include "IRLibSAMD51.h"
+
+/* Pinoccio Scout */
 #elif defined(__AVR_ATmega256RFR2__)
 	#define IR_SEND_TIMER3		3
 
@@ -151,7 +157,7 @@
 		#define IR_RECV_TIMER4_HS
 	#elif defined(IR_SEND_TIMER5)
 		#define IR_RECV_TIMER5
-	#elif defined(__SAMD21G18A__) || defined(__SAMD21E18A__)//handle this one a little differently
+	#elif defined(__SAMD21G18A__) || defined(__SAMD21E18A__) || defined(__SAMD51__)//handle this one a little differently
     #define IR_RECV_TC3
   #else
 		#error "Unable to set IR_RECV_TIMER"
@@ -255,7 +261,7 @@
 	#else
 		#define IR_SEND_PWM_PIN	IR_SEND_TIMER5
 	#endif
-#elif defined(IRLibSAMD21_h) // Used for SAMD 21
+#elif defined(IRLibSAMD51_h) || defined(IRLibSAMD21_h) // Used for SAMD 21 or 51
 /* All of these definitions have been moved to IRLibSAMD21.h
 	#define IR_SEND_PWM_START 
 	#define IR_SEND_MARK_TIME(time)
@@ -330,7 +336,7 @@
 	#define IR_RECV_CONFIG_TICKS() ({ \
 		TCCR5A = 0;   TCCR5B = _BV(WGM52) | _BV(CS50); \
 		OCR5A = SYSCLOCK * USEC_PER_TICK / 1000000;   TCNT5 = 0; })
-#elif defined(IRLibSAMD21_h)  //for SAMD 21
+#elif defined(IRLibSAMD21_h) || defined(IRLibSAMD51_h) //for SAMD 21 or 51
 /* All of these definitions have been moved to IRLibSAMD21.h
 	#define IR_RECV_ENABLE_INTR 
   #define IR_RECV_DISABLE_INTR
