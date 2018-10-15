@@ -28,8 +28,8 @@
 #ifdef IRLIBSENDBASE_H
 class IRsendBellFibe: public virtual IRsendBase {
   public:
-    void send(uint32_t data, uint8_t nBits= 12) {
-      if (nBits==0) nBits=12;
+    void send(uint32_t data, uint8_t nBits= 32) {
+      if (nBits==0) nBits=32;
       extent=0;
       data <<= (32 - nBits);
       nBits=nBits/2;
