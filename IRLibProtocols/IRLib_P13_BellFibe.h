@@ -5,6 +5,8 @@
 /*
  * This file implements the protocol used by Bell Fibe slim remote controls
  * manufactured by Ruwido.
+ *
+ * Note that it is up to the user to implement the 0x00008000 toggle bit
  */
 #define RUWIDO_HEAD_MARK 334
 #define RUWIDO_DATA_MARK  86                                                                                                                      
@@ -28,8 +30,8 @@
 #ifdef IRLIBSENDBASE_H
 class IRsendBellFibe: public virtual IRsendBase {
   public:
-    void send(uint32_t data, uint8_t nBits= 12) {
-      if (nBits==0) nBits=12;
+    void send(uint32_t data, uint8_t nBits= 32) {
+      if (nBits==0) nBits=32;
       extent=0;
       data <<= (32 - nBits);
       nBits=nBits/2;
