@@ -62,32 +62,20 @@ class IRdecodeBellFibe: public virtual IRdecodeBase {
       IRLIB_ATTEMPT_MESSAGE(F("BellFibe"));
 
       if ( (recvGlobal.decodeLength!=(12+4)) && (recvGlobal.decodeLength!=(24+4)) && (recvGlobal.decodeLength!=(32+4)) ){
-            Serial.println(" ");
-            Serial.print("1. "); Serial.println(recvGlobal.decodeLength);
           return RAW_COUNT_ERROR;
       }
 
       if (!ignoreHeader) if (!MATCH(recvGlobal.decodeBuffer[1],RUWIDO_HEAD_MARK+60)){
-            Serial.print("2. ");
-            Serial.print(MATCH(recvGlobal.decodeBuffer[1],RUWIDO_HEAD_MARK+60)); Serial.print(" "); Serial.print(recvGlobal.decodeBuffer[1]);
-            Serial.print(" "); Serial.println(RUWIDO_HEAD_MARK+60);
           return HEADER_MARK_ERROR(RUWIDO_HEAD_MARK);
       }
 
       if (!MATCH(recvGlobal.decodeBuffer[2],RUWIDO_ZERO)){
-            Serial.print("3. ");
-            Serial.print(MATCH(recvGlobal.decodeBuffer[2],RUWIDO_ZERO)); Serial.print(" "); Serial.println(recvGlobal.decodeBuffer[2]);
           return HEADER_SPACE_ERROR(RUWIDO_ZERO);
       }
 
       offset=3; uint32_t data=0;
       while (offset < (recvGlobal.decodeLength-1)) {
         if (!ABS_MATCH(recvGlobal.decodeBuffer[offset],RUWIDO_DATA_MARK,RUWIDO_TOLERANCE)){
-        Serial.println(" ");
-        Serial.print("4. ");
-        Serial.print(recvGlobal.decodeBuffer[offset]); Serial.print("  ");
-        Serial.print(RUWIDO_DATA_MARK); Serial.print("  "); Serial.print(RUWIDO_TOLERANCE); Serial.print("  ");
-        Serial.println(ABS_MATCH(recvGlobal.decodeBuffer[offset],RUWIDO_DATA_MARK,RUWIDO_TOLERANCE));
             return DATA_MARK_ERROR(RUWIDO_DATA_MARK);
         }
         offset++;
@@ -105,22 +93,11 @@ class IRdecodeBellFibe: public virtual IRdecodeBase {
           data = (data<<2) + 3;
         } 
         else {
-            Serial.print("5. ");
-            Serial.print(recvGlobal.decodeBuffer[offset]); Serial.print("  ");
-            Serial.print(RUWIDO_ZERO); Serial.print("  "); Serial.print(RUWIDO_TOLERANCE); Serial.print("  ");
-            Serial.println(ABS_MATCH(recvGlobal.decodeBuffer[offset],RUWIDO_ZERO,RUWIDO_TOLERANCE));
             return DATA_SPACE_ERROR(RUWIDO_ZERO);
         }
         offset++;
       }
-            Serial.print(recvGlobal.decodeBuffer[offset]); Serial.print("  ");
-            Serial.print(RUWIDO_DATA_MARK); Serial.print("  ");
-            Serial.println(MATCH(recvGlobal.decodeBuffer[offset],RUWIDO_DATA_MARK));
       if (!MATCH(recvGlobal.decodeBuffer[offset],RUWIDO_DATA_MARK)){
-            Serial.print("Last. ");
-            Serial.print(recvGlobal.decodeBuffer[offset]); Serial.print("  ");
-            Serial.print(RUWIDO_DATA_MARK); Serial.print("  ");
-            Serial.println(MATCH(recvGlobal.decodeBuffer[offset],RUWIDO_DATA_MARK));
           return DATA_MARK_ERROR(RUWIDO_DATA_MARK);
       }
       bits = recvGlobal.decodeLength-4;//set bit length
