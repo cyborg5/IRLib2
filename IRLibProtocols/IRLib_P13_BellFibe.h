@@ -8,12 +8,12 @@
  *
  * Note that it is up to the user to implement the 0x00008000 toggle bit
  */
-#define RUWIDO_HEAD_MARK 334
-#define RUWIDO_DATA_MARK  86                                                                                                                      
-#define RUWIDO_ZERO      360                                                                                                                        
-#define RUWIDO_ONE       526                                                                                                                        
-#define RUWIDO_TWO       700                                                                                                                        
-#define RUWIDO_THREE     865 
+#define RUWIDO_HEAD_MARK 260
+#define RUWIDO_DATA_MARK  90
+#define RUWIDO_ZERO      320
+#define RUWIDO_ONE       480
+#define RUWIDO_TWO       660
+#define RUWIDO_THREE     850
 
 #ifndef IRLIB_P13_H
 #define IRLIB_PROTOCOL_13_H
@@ -36,7 +36,7 @@ class IRsendBellFibe: public virtual IRsendBase {
       data <<= (32 - nBits);
       nBits=nBits/2;
       enableIROut(36);
-      mark(RUWIDO_HEAD_MARK); space(RUWIDO_ZERO);//Send header
+      mark(RUWIDO_HEAD_MARK+100); space(RUWIDO_HEAD_MARK);//Send header
       for (uint8_t i = 0; i < nBits; i++) {
         mark(RUWIDO_DATA_MARK);
         switch (data & 0xC0000000UL) {//use the leftmost two bits
@@ -47,26 +47,51 @@ class IRsendBellFibe: public virtual IRsendBase {
         }
         data <<= 2;
       };
-      mark(RUWIDO_DATA_MARK);  
+      mark(RUWIDO_DATA_MARK+100);  
       space(27778-extent);
     };
 };
 #endif  //IRLIBSENDBASE_H
 
 #ifdef IRLIBDECODEBASE_H
-#define RUWIDO_TOLERANCE 80 
+#define RUWIDO_TOLERANCE 100 
 class IRdecodeBellFibe: public virtual IRdecodeBase {
   public:
     bool decode(void) {
       resetDecoder();//This used to be in the receiver getResults.
       IRLIB_ATTEMPT_MESSAGE(F("BellFibe"));
-      if ( (recvGlobal.decodeLength!=(12+4)) && (recvGlobal.decodeLength!=(24+4)) && (recvGlobal.decodeLength!=(32+4)) ) return RAW_COUNT_ERROR;
-      if (!ignoreHeader) if (!MATCH(recvGlobal.decodeBuffer[1],RUWIDO_HEAD_MARK)) return HEADER_MARK_ERROR(RUWIDO_HEAD_MARK);
-      if (!MATCH(recvGlobal.decodeBuffer[2],RUWIDO_ZERO)) return HEADER_SPACE_ERROR(RUWIDO_ZERO);
+
+      if ( (recvGlobal.decodeLength!=(12+4)) && (recvGlobal.decodeLength!=(24+4)) && (recvGlobal.decodeLength!=(32+4)) ){
+            Serial.println(" ");
+            Serial.print("1. "); Serial.println(recvGlobal.decodeLength);
+          return RAW_COUNT_ERROR;
+      }
+
+      if (!ignoreHeader) if (!MATCH(recvGlobal.decodeBuffer[1],RUWIDO_HEAD_MARK+60)){
+            Serial.print("2. ");
+            Serial.print(MATCH(recvGlobal.decodeBuffer[1],RUWIDO_HEAD_MARK+60)); Serial.print(" "); Serial.print(recvGlobal.decodeBuffer[1]);
+            Serial.print(" "); Serial.println(RUWIDO_HEAD_MARK+60);
+          return HEADER_MARK_ERROR(RUWIDO_HEAD_MARK);
+      }
+
+      if (!MATCH(recvGlobal.decodeBuffer[2],RUWIDO_ZERO)){
+            Serial.print("3. ");
+            Serial.print(MATCH(recvGlobal.decodeBuffer[2],RUWIDO_ZERO)); Serial.print(" "); Serial.println(recvGlobal.decodeBuffer[2]);
+          return HEADER_SPACE_ERROR(RUWIDO_ZERO);
+      }
+
       offset=3; uint32_t data=0;
       while (offset < (recvGlobal.decodeLength-1)) {
-        if (!ABS_MATCH(recvGlobal.decodeBuffer[offset],RUWIDO_DATA_MARK,RUWIDO_TOLERANCE)) return DATA_MARK_ERROR(RUWIDO_DATA_MARK);
+        if (!ABS_MATCH(recvGlobal.decodeBuffer[offset],RUWIDO_DATA_MARK,RUWIDO_TOLERANCE)){
+        Serial.println(" ");
+        Serial.print("4. ");
+        Serial.print(recvGlobal.decodeBuffer[offset]); Serial.print("  ");
+        Serial.print(RUWIDO_DATA_MARK); Serial.print("  "); Serial.print(RUWIDO_TOLERANCE); Serial.print("  ");
+        Serial.println(ABS_MATCH(recvGlobal.decodeBuffer[offset],RUWIDO_DATA_MARK,RUWIDO_TOLERANCE));
+            return DATA_MARK_ERROR(RUWIDO_DATA_MARK);
+        }
         offset++;
+
         if (ABS_MATCH(recvGlobal.decodeBuffer[offset],RUWIDO_ZERO, RUWIDO_TOLERANCE) ) { //Logical "0"
           data <<= 2;
         } 
@@ -79,10 +104,25 @@ class IRdecodeBellFibe: public virtual IRdecodeBase {
         else if (ABS_MATCH(recvGlobal.decodeBuffer[offset],RUWIDO_THREE, RUWIDO_TOLERANCE) ) { //Logical "3"
           data = (data<<2) + 3;
         } 
-        else return DATA_SPACE_ERROR(RUWIDO_ZERO);
+        else {
+            Serial.print("5. ");
+            Serial.print(recvGlobal.decodeBuffer[offset]); Serial.print("  ");
+            Serial.print(RUWIDO_ZERO); Serial.print("  "); Serial.print(RUWIDO_TOLERANCE); Serial.print("  ");
+            Serial.println(ABS_MATCH(recvGlobal.decodeBuffer[offset],RUWIDO_ZERO,RUWIDO_TOLERANCE));
+            return DATA_SPACE_ERROR(RUWIDO_ZERO);
+        }
         offset++;
       }
-      if (!MATCH(recvGlobal.decodeBuffer[offset],RUWIDO_DATA_MARK))  return DATA_MARK_ERROR(RUWIDO_DATA_MARK);
+            Serial.print(recvGlobal.decodeBuffer[offset]); Serial.print("  ");
+            Serial.print(RUWIDO_DATA_MARK); Serial.print("  ");
+            Serial.println(MATCH(recvGlobal.decodeBuffer[offset],RUWIDO_DATA_MARK));
+      if (!MATCH(recvGlobal.decodeBuffer[offset],RUWIDO_DATA_MARK)){
+            Serial.print("Last. ");
+            Serial.print(recvGlobal.decodeBuffer[offset]); Serial.print("  ");
+            Serial.print(RUWIDO_DATA_MARK); Serial.print("  ");
+            Serial.println(MATCH(recvGlobal.decodeBuffer[offset],RUWIDO_DATA_MARK));
+          return DATA_MARK_ERROR(RUWIDO_DATA_MARK);
+      }
       bits = recvGlobal.decodeLength-4;//set bit length
       value = data;//put remaining bits in value
       protocolNum=BELLFIBE;
