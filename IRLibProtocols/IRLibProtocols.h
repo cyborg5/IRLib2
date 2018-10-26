@@ -25,8 +25,9 @@
 #define RCMM 11
 #define CYKM 12
 #define BELLFIBE 13
+#define RCA 14
 //#define ADDITIONAL_14 14
-#define LAST_PROTOCOL 13 //Be sure to update this when adding protocols
+#define LAST_PROTOCOL 14 //Be sure to update this when adding protocols
 
 /*
  * Returns a pointer to a flash stored string that is the name of the protocol received. 

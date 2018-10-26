@@ -19,7 +19,7 @@ const __FlashStringHelper *Pnames(uint8_t type) {
   const __FlashStringHelper *Names[LAST_PROTOCOL+1]={
 	F("Unknown"),F("NEC"),F("Sony"),F("RC5"),F("RC6"),F("Panasonic Old"),F("JVC"),
 	F("NECx"),F("Samsung36"),F("G.I.Cable"),F("DirecTV"),F("rcmm"),F("CYKM"),
-    F("BellFibe")//expand or edit these
+    F("BellFibe"),F("RCA")//expand or edit these
   };
   return Names[type];
 };
