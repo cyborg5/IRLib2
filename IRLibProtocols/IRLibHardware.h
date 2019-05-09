@@ -79,17 +79,22 @@
   
 /* Arduino Zero, M0, M0 Pro, Feather M0 etc. */
 #elif defined (__SAMD21G18A__) || defined(__SAMD21E18A__)
-// All of the settings can be found in IRLibSAMD21.h
-  #include "IRLibSAMD21.h"
+	// All of the settings can be found in IRLibSAMD21.h
+	#include "IRLibSAMD21.h"
 
 /* Adafruit Metro M4, Feather M4 and any other SAMD51 boards */
 #elif defined (__SAMD51__) 
-// All of the settings can be found in IRLibSAMD51.h
-  #include "IRLibSAMD51.h"
+	// All of the settings can be found in IRLibSAMD51.h
+	#include "IRLibSAMD51.h"
 
 /* Pinoccio Scout */
 #elif defined(__AVR_ATmega256RFR2__)
 	#define IR_SEND_TIMER3		3
+
+/* ESP32 */
+#elif defined(ESP32)
+	// All of the settings can be found in IRLibESP32.h
+	#include "IRLibESP32.h"
 
 /* Arduino Duemilanove, Diecimila, LilyPad, Mini, Fio, etc */
 #else
@@ -134,7 +139,9 @@
 
 // Miscellaneous defines needed for computations below
 #ifdef F_CPU
-#define SYSCLOCK F_CPU     // main Arduino clock
+#define SYSCLOCK F_CPU     // clock setting from compiler
+#elif defined(ESP32)
+#define SYSCLOCK 80000000  // main ESP32 clock
 #else
 #define SYSCLOCK 16000000  // main Arduino clock
 #endif
@@ -158,8 +165,10 @@
 	#elif defined(IR_SEND_TIMER5)
 		#define IR_RECV_TIMER5
 	#elif defined(__SAMD21G18A__) || defined(__SAMD21E18A__) || defined(__SAMD51__)//handle this one a little differently
-    #define IR_RECV_TC3
-  #else
+		#define IR_RECV_TC3
+	#elif defined(ESP32)
+		#define IR_RECV_ESP32
+	#else
 		#error "Unable to set IR_RECV_TIMER"
 	#endif
 #endif
@@ -266,7 +275,15 @@
 	#define IR_SEND_PWM_START 
 	#define IR_SEND_MARK_TIME(time)
 	#define IR_SEND_PWM_STOP 
-  #define IR_SEND_PWM_PIN	
+	#define IR_SEND_PWM_PIN	
+	#define IR_SEND_CONFIG_KHZ(val) 
+ */
+#elif defined(IR_SEND_ESP32) && defined(IRLibESP32_h)
+/* All of these definitions have been moved to IRLibESP32.h
+	#define IR_SEND_PWM_START 
+	#define IR_SEND_MARK_TIME(time)
+	#define IR_SEND_PWM_STOP 
+	#define IR_SEND_PWM_PIN	
 	#define IR_SEND_CONFIG_KHZ(val) 
  */
 #else // unknown timer
@@ -339,7 +356,14 @@
 #elif defined(IRLibSAMD21_h) || defined(IRLibSAMD51_h) //for SAMD 21 or 51
 /* All of these definitions have been moved to IRLibSAMD21.h
 	#define IR_RECV_ENABLE_INTR 
-  #define IR_RECV_DISABLE_INTR
+	#define IR_RECV_DISABLE_INTR
+	#define IR_RECV_INTR_NAME
+	#define IR_RECV_CONFIG_TICKS()
+ */
+#elif defined(IR_RECV_ESP32) && defined(IRLibESP32_h)
+/* All of these definitions have been moved to IRLibESP32.h
+	#define IR_RECV_ENABLE_INTR 
+	#define IR_RECV_DISABLE_INTR
 	#define IR_RECV_INTR_NAME
 	#define IR_RECV_CONFIG_TICKS()
  */
