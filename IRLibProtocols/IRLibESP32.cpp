@@ -14,14 +14,18 @@
 #include "IRLibHardware.h"
 #include "IRLibESP32.h"
 
-hw_timer_t *esp32Timer;
+hw_timer_t *esp32Timer = NULL;
 
 void startESP32Timer() {
-    timerAlarmEnable(esp32Timer);
+    if (esp32Timer != NULL) {
+        timerAlarmEnable(esp32Timer);
+    }
 }
 
 void stopESP32Timer() {
-    timerAlarmDisable(esp32Timer);
+    if (esp32Timer != NULL) {
+        timerAlarmDisable(esp32Timer);
+    }
 }
 
 void initializeESP32TimerInterrupt() {
