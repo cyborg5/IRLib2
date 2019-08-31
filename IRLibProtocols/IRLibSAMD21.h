@@ -88,7 +88,7 @@
   #if ((IR_SEND_PWM_PIN > 21) || ( (IR_SEND_PWM_PIN > 12) && (IR_SEND_PWM_PIN < 18)) )
     #error "Unsupported output pin on Arduino MKR 1000." //issue 56 error?
   #endif
-#elif (defined(ARDUINO_SAMD_FEATHER_M0) || defined(ARDUINO_SAMD_FEATHER_M0_EXPRESS) )
+#elif (defined(ADAFRUIT_FEATHER_M0) || defined(ARDUINO_SAMD_FEATHER_M0_EXPRESS) )
   //Settings for Adafruit Feather M0 or Adafruit Feather M0 Express
   //Default is 9. Available on all Feather M0 are 0,1,5,6,9-13,17/A3,18/A4
   //On the standard M0 20/SDA, 21/SCL, 22/MISO, 23/MOSI, 24/SCK
