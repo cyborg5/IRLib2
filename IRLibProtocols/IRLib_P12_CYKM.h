@@ -83,7 +83,8 @@
 	#define PV_IR_SEND_PROTOCOL_12    public virtual IRsendCYKM
 #endif
 
-#if defined(__AVR_ATmega32U4__) || defined(ARDUINO_SAM_DUE) || defined(ARDUINO_SAM_ZERO)
+#if defined(__AVR_ATmega32U4__) || defined(ARDUINO_SAM_DUE) || defined(ARDUINO_SAM_ZERO) \
+	|| defined(__SAMD21G18A__) || defined (__SAMD21E18A__) || defined (__SAMD51__)
   #include <Keyboard.h>
   #include <Mouse.h>
   #include <HID.h>
@@ -180,7 +181,8 @@ class IRdecodeCYKM: public virtual IRdecodeBase {
 
     };  
     void doMouseKeyboard(void){
-      #if defined(__AVR_ATmega32U4__) || defined(ARDUINO_SAM_DUE) || defined(ARDUINO_SAM_ZERO)
+	#if defined(__AVR_ATmega32U4__) || defined(ARDUINO_SAM_DUE) || defined(ARDUINO_SAM_ZERO) \
+		|| defined(__SAMD21G18A__) || defined (__SAMD21E18A__) || defined (__SAMD51__)
       int8_t Button; 
       int8_t xDir=0; int8_t yDir=0; int8_t wDir=0;
       switch (cmdType) {
@@ -247,7 +249,8 @@ class IRdecodeCYKM: public virtual IRdecodeBase {
       #endif
     };
     void doMouseKeyboard(uint16_t code) {
-      #if defined(__AVR_ATmega32U4__) || defined(ARDUINO_SAM_DUE) || defined(ARDUINO_SAM_ZERO)
+      #if defined(__AVR_ATmega32U4__) || defined(ARDUINO_SAM_DUE) || defined(ARDUINO_SAM_ZERO) \
+		|| defined(__SAMD21G18A__) || defined (__SAMD21E18A__) || defined (__SAMD51__)
         value=code;
         parseValue();
         doMouseKeyboard();
@@ -326,6 +329,37 @@ class IRdecodeCYKM: public virtual IRdecodeBase {
  #define KEY_F10	0xCB
  #define KEY_F11	0xCC
  #define KEY_F12	0xCD
+ #define KEY_F13       0xF0
+ #define KEY_F14       0xF1
+ #define KEY_F15       0xF2
+ #define KEY_F16       0xF3
+ #define KEY_F17       0xF4
+ #define KEY_F18       0xF5
+ #define KEY_F19       0xF6
+ #define KEY_F20       0xF7
+ #define KEY_F21       0xF8
+ #define KEY_F22       0xF9
+ #define KEY_F23       0xFA
+ #define KEY_F24       0xFB
 #endif
-
+ #define KEY_PRTSCR      0xCE
+ #define KEY_SCROLL_LOCK 0xCF
+ #define KEY_PAUSE       0xD0
+ #define KEY_NUMLOCK     0xDB
+ #define KEY_NP_SLASH    0xDC
+ #define KEY_NP_STAR     0xDD
+ #define KEY_NP_MINUS    0xDE
+ #define KEY_NP_PLUS     0xDF
+ #define KEY_NP_ENTER    0xE0
+ #define KEY_NP_1_END    0xE1
+ #define KEY_NP_2_DOWN   0xE2
+ #define KEY_NP_3_PGDN   0xE3
+ #define KEY_NP_4_LEFT   0xE4
+ #define KEY_NP_5        0xE5
+ #define KEY_NP_6_RIGHT  0xE6
+ #define KEY_NP_7_HOME   0xE7
+ #define KEY_NP_8_UP     0xE8
+ #define KEY_NP_9_PGUD   0xE9
+ #define KEY_NP_0_INSERT 0xEA
+ #define KEY_NP_PERIOD_DELETE 0xEB
 #endif //IRLIB_PROTOCOL_12_H

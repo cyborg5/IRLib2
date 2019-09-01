@@ -1,3 +1,8 @@
+Version 2.0.18 September 1, 2019
+  Fixed problem with protocol 12 SAMD21 & SAMD51 detection.
+  Added extended USB keyboard scan codes
+Version 2.0.17 August 31, 2019 
+  Fixed problem with Feather M0 detection
 Version 2.0.16 May 3, 2018 
   Support SAMD51 M4 processor on the Adafruit Metro M4. See SAMD51.txt for details.
 Version 2.0.15 April 4, 2018
