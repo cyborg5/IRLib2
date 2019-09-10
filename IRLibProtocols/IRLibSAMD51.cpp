@@ -29,8 +29,10 @@ void initializeSAMD51PWM(uint16_t khz) {
   uint32_t attr = pinDesc.ulPinAttribute;
   //If PWM unsupported then do nothing and exit
 
-  if ( !((attr & PIN_ATTR_PWM) == PIN_ATTR_PWM) ) {
-	  return;
+  int pwmMask = PIN_ATTR_PWM_E | PIN_ATTR_PWM_F | PIN_ATTR_PWM_G;
+  if ((attr & pwmMask) == 0) {
+    Serial.println("IRPin does not support PWM");
+    return;
   };
   
   uint32_t tcNum = GetTCNumber(pinDesc.ulPWMChannel);
