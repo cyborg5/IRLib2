@@ -43,9 +43,10 @@
   #endif
 #elif defined (ADAFRUIT_GRAND_CENTRAL_M4)
   //Settings for Adafruit Grand Central Metro M4. Default is 9.
-  //Available 2-14, 23-28, 30-31, 38-39, 59-61 (A12-A15), 69 (A3)
+  //Available 2-10, 12-14, 23-28, 30-31, 38-39, 59-61(A12-A15), 69(A3)
   #define IR_SEND_PWM_PIN 9
-  #if (! ( ((IR_SEND_PWM_PIN>=2) && (IR_SEND_PWM_PIN<=14) ) || \
+  #if (! ( ((IR_SEND_PWM_PIN>=2) && (IR_SEND_PWM_PIN<=10) ) || \
+           ((IR_SEND_PWM_PIN>=12) && (IR_SEND_PWM_PIN<=14) ) || \
            ((IR_SEND_PWM_PIN>=23) && (IR_SEND_PWM_PIN<=28) ) || \
 		   (IR_SEND_PWM_PIN==30) || (IR_SEND_PWM_PIN==31) || \
 		   (IR_SEND_PWM_PIN==38) || (IR_SEND_PWM_PIN==39) || \
