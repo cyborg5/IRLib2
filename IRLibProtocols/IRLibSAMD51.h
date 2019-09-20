@@ -23,12 +23,34 @@
 //Edit the #define IR_SEND_PWM_PIN value to one of the available pin numbers
 //There are conditional compile statements after that definition which attempt
 // to generate an error if you choose an unsupported pin number.
-#if defined (ARDUINO_METRO_M4) 
+#if defined (ADAFRUIT_METRO_M4_EXPRESS) 
   //Settings for Adafruit Metro M4 
   //Default is 9. Available 0-13
   #define IR_SEND_PWM_PIN 9
   #if (IR_SEND_PWM_PIN > 13)
     #error "Unsupported output pin on Adafruit Metro M4
+  #endif
+#elif defined (ADAFRUIT_FEATHER_M4_EXPRESS)
+  //Settings for Adafruit Feather M4 Express
+  //Default is 9. Available 0,1,4-6,9-13,16-19(A2-A5), 21(SDA), 22(SCL)
+  #define IR_SEND_PWM_PIN 9
+  #if (! ( (IR_SEND_PWM_PIN==0) || (IR_SEND_PWM_PIN==1) || \
+           ((IR_SEND_PWM_PIN>=4) && (IR_SEND_PWM_PIN<=6) ) || \
+           ((IR_SEND_PWM_PIN>=9) && (IR_SEND_PWM_PIN<=6) ) || \
+           ((IR_SEND_PWM_PIN>=16) && (IR_SEND_PWM_PIN<=19) ) || \
+		   (IR_SEND_PWM_PIN==21) || (IR_SEND_PWM_PIN==22) ) )
+     #error "Unsupported output pin Adafruit Feather M4 Express"
+  #endif
+#elif defined (ADAFRUIT_GRAND_CENTRAL_M4)
+  //Settings for Adafruit Grand Central Metro M4. Default is 9.
+  //Available 2-14, 23-28, 30-31, 38-39, 59-61 (A12-A15), 69 (A3)
+  #define IR_SEND_PWM_PIN 9
+  #if (! ( ((IR_SEND_PWM_PIN>=2) && (IR_SEND_PWM_PIN<=14) ) || \
+           ((IR_SEND_PWM_PIN>=23) && (IR_SEND_PWM_PIN<=28) ) || \
+		   (IR_SEND_PWM_PIN==30) || (IR_SEND_PWM_PIN==31) || \
+		   (IR_SEND_PWM_PIN==38) || (IR_SEND_PWM_PIN==39) || \
+           ((IR_SEND_PWM_PIN>=59) && (IR_SEND_PWM_PIN<=61) ) || (IR_SEND_PWM_PIN== 69)))
+     #error "Unsupported output pin Adafruit Grand Central Metro M4"
   #endif
 #else //Other generic SAMD 51 boards 
   //Default is 9.
@@ -41,15 +63,10 @@
  */
 
 
-//Timer used for PWM
-extern Tcc* IR_TCCx;
-
 // Turns PWM on and off after already set up
-#define IR_SEND_PWM_START {IR_TCCx->CTRLA.bit.ENABLE = 1;\
-  while (IR_TCCx->SYNCBUSY.bit.ENABLE);}
+#define IR_SEND_PWM_START IRLibStartPWM51();
 #define IR_SEND_MARK_TIME(time)  IRLibDelayUSecs(time)
-#define IR_SEND_PWM_STOP {IR_TCCx->CTRLA.bit.ENABLE = 0;\
-  while (IR_TCCx->SYNCBUSY.bit.ENABLE);}
+#define IR_SEND_PWM_STOP IRLibStopPWM51();
 #define IR_SEND_CONFIG_KHZ(val) initializeSAMD51PWM(val);
 
 /* These are the definitions for setting up the 50 microsecond
@@ -90,5 +107,6 @@ extern Tcc* IR_TCCx;
 //prototypes
 void initializeSAMD51PWM(uint16_t khz);
 void initializeSAMD51timerInterrupt(void);
-
+void IRLibStopPWM51(void);
+void IRLibStartPWM51(void);
 #endif //IRLibSAMD51_h

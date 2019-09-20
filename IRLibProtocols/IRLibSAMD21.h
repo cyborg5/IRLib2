@@ -94,7 +94,7 @@
   //On the standard M0 20/SDA, 21/SCL, 22/MISO, 23/MOSI, 24/SCK
   //On the M0 Express  26/SDA, 27/SCL, 28/MISO, 29/MOSI, 30/SCK
   //Only the pin numbers are different so use the labels.
-  #define IR_SEND_PWM_PIN 9
+  #define IR_SEND_PWM_PIN 12//9
   #if (  ( (IR_SEND_PWM_PIN>1)  && (IR_SEND_PWM_PIN<5) )  \
 	  || ( (IR_SEND_PWM_PIN>19) && (IR_SEND_PWM_PIN<PIN_WIRE_SDA) ) \
       || ( (IR_SEND_PWM_PIN>13) && (IR_SEND_PWM_PIN<17) ) \
