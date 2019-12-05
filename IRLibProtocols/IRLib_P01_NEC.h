@@ -28,7 +28,7 @@
 
 #ifndef IRLIB_PROTOCOL_01_H
 #define IRLIB_PROTOCOL_01_H
-#define IR_SEND_PROTOCOL_01		case 1: if(data2==0)data2=38;IRsendNEC::send(data,data2); break;
+#define IR_SEND_PROTOCOL_01		case 1: if(khz==0)khz=38;IRsendNEC::send(data,khz); break;
 #define IR_DECODE_PROTOCOL_01	if(IRdecodeNEC::decode()) return true;
 #ifdef IRLIB_HAVE_COMBO
 	#define PV_IR_DECODE_PROTOCOL_01 ,public virtual IRdecodeNEC
