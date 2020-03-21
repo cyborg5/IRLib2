@@ -33,10 +33,10 @@ typedef struct _IR_PWM_Map
 IR_PWM_Map_t IR_PWM_Map[64]=
 {
   //PORTA 0-31
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PA00
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PA01
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PA02
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PA03
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PA00
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PA01
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PA02
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PA03
   {TCC0_CH0,PORT_PMUX_PMUXE_E}, //PA04	works
   {TCC0_CH1,PORT_PMUX_PMUXO_E}, //PA05	works
   {TCC1_CH0,PORT_PMUX_PMUXE_E}, //PA06	works
@@ -62,47 +62,47 @@ IR_PWM_Map_t IR_PWM_Map[64]=
   
   {TCC1_CH2,PORT_PMUX_PMUXE_F}, //PA24	untested
   {TCC1_CH3,PORT_PMUX_PMUXO_F}, //PA25	untested
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PA26
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PA27
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PA28
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PA29
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PA26
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PA27
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PA28
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PA29
   {TCC1_CH0,PORT_PMUX_PMUXE_E}, //PA30	untested
   {TCC1_CH1,PORT_PMUX_PMUXO_E}, //PA31	untested
   
    //PORTB 0-31
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB00
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB01
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB02
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB03
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB04
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB05
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB06
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB07
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB00
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB01
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB02
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB03
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB04
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB05
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB06
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB07
   
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB08
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB09
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB08
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB09
   {TCC0_CH4,PORT_PMUX_PMUXE_F}, //PB10	works
   {TCC0_CH5,PORT_PMUX_PMUXO_F}, //PB11	works
   {TCC0_CH6,PORT_PMUX_PMUXE_F}, //PB12	untested
   {TCC0_CH7,PORT_PMUX_PMUXO_F}, //PB13	untested
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB14
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB15
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB14
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB15
   
   {TCC0_CH4,PORT_PMUX_PMUXE_F}, //PB16	untested
   {TCC0_CH5,PORT_PMUX_PMUXO_F}, //PB17	untested
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB18
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB19
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB20
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB21
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB22
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB23
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB18
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB19
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB20
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB21
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB22
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB23
   
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB24
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB25
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB26
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB27
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB28
-  {NOT_ON_TIMER,NOT_ON_TIMER},  //PB29
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB24
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB25
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB26
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB27
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB28
+  {NOT_ON_TIMER,static_cast<uint8_t> (NOT_ON_TIMER)},  //PB29
   {TCC0_CH0,PORT_PMUX_PMUXE_E}, //PB30	untested
   {TCC0_CH1,PORT_PMUX_PMUXO_E}  //PB31	untested
 };
