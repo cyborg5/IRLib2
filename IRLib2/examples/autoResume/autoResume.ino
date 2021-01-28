@@ -7,7 +7,7 @@
 //It's better to include only the parts of library you really need.
 //But for this example it's quick and easy. See "comboDump" example
 //for a more efficient way.
-#include "IRLibAll.h"
+#include <IRLibAll.h>
 
 IRrecvPCI myReceiver(2); //create receiver and pass pin number
 IRdecode myDecoder;   //create decoder
@@ -33,4 +33,3 @@ void loop() {
     myReceiver.enableIRIn();      //Restart receiver
   }
 }
-

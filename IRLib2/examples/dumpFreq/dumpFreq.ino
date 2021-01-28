@@ -52,9 +52,8 @@ void loop() {
     myFreq.disableFreqDetect();//Stop interrupt as soon as possible
     myDecoder.decode();
     myFreq.dumpResults(false);//Change to "true" for more detail
-    myDecoder.dumpResults();
+    myDecoder.dumpResults(false);
     myReceiver.enableIRIn(); 
     myFreq.enableFreqDetect();//Zero out previous results and restart ISR
   }
 }
-
