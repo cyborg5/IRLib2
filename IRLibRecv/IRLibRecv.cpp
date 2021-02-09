@@ -12,7 +12,7 @@
  
 #include "IRLibRecv.h"
 #include "IRLibHardware.h" //needed for IRLib_didIROut
-#if !defined (__SAMD21G18A__)
+#if !defined (__SAMD21G18A__) && !defined(ESP32)
   #include <avr/interrupt.h>
 #endif
   

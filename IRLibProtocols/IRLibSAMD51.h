@@ -28,7 +28,7 @@
   //Default is 9. Available 0-13
   #define IR_SEND_PWM_PIN 9
   #if (IR_SEND_PWM_PIN > 13)
-    #error "Unsupported output pin on Adafruit Metro M4
+    #error "Unsupported output pin on Adafruit Metro M4"
   #endif
 #elif defined (ADAFRUIT_FEATHER_M4_EXPRESS)
   //Settings for Adafruit Feather M4 Express

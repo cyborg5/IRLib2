@@ -8,7 +8,9 @@
  * passing the interrupt number.
  */
 #include <Arduino.h>
-#include <avr/interrupt.h>
+#if !defined (__SAMD21G18A__) && !defined(ESP32)
+  #include <avr/interrupt.h>
+#endif
 #include "IRLibFreq.h"
 
 volatile FREQUENCY_BUFFER_TYPE *IRfreqTimes;
