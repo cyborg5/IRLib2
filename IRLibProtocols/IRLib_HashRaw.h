@@ -38,9 +38,9 @@
  */
 class IRsendRaw: public virtual IRsendBase {
   public:
-    void send(uint16_t *buf, uint8_t len, uint8_t khz) {
+    void send(uint16_t *buf, uint16_t len, uint8_t khz) {
       enableIROut(khz);
-      for (uint8_t i = 0; i < len; i++) {
+      for (uint16_t i = 0; i < len; i++) {
         if (i & 1) {
           space(buf[i]);
         } 
