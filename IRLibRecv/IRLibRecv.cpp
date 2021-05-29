@@ -72,7 +72,7 @@ bool IRrecv::getResults(void) {
  */
 void IRrecv::setFrameTimeout(uint16_t frameTimeout) {
   recvGlobal.frameTimeoutTicks=frameTimeout/USEC_PER_TICK;
-  IRrecv::setFrameTimeout(frameTimeout);
+  IRrecvBase::setFrameTimeout(frameTimeout);
 }
 
 /*
