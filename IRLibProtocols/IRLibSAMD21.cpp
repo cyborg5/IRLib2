@@ -27,7 +27,7 @@ Tcc* IR_TCCx;
 typedef struct _IR_PWM_Map
 {
   ETCChannel IR_TCC_Channel;
-  uint8_t IR_PER_EorF;
+  int8_t IR_PER_EorF;
 } IR_PWM_Map_t;
 
 IR_PWM_Map_t IR_PWM_Map[64]=
