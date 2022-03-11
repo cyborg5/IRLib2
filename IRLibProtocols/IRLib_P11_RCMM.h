@@ -73,7 +73,7 @@ class IRsendRCMM: public virtual IRsendBase {
  * we created a new match routine ABS_MATCH which allows you to specify an absolute
  * number of microseconds of tolerance for comparison.
  */ 
-#define RCMM_TOLERANCE 80
+#define RCMM_TOLERANCE 90
 class IRdecodeRCMM: public virtual IRdecodeBase {
   public:
     bool decode(void) {

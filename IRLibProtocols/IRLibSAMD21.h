@@ -94,7 +94,7 @@
   //On the standard M0 20/SDA, 21/SCL, 22/MISO, 23/MOSI, 24/SCK
   //On the M0 Express  26/SDA, 27/SCL, 28/MISO, 29/MOSI, 30/SCK
   //Only the pin numbers are different so use the labels.
-  #define IR_SEND_PWM_PIN 12//9
+  #define IR_SEND_PWM_PIN 9
   #if (  ( (IR_SEND_PWM_PIN>1)  && (IR_SEND_PWM_PIN<5) )  \
 	  || ( (IR_SEND_PWM_PIN>19) && (IR_SEND_PWM_PIN<PIN_WIRE_SDA) ) \
       || ( (IR_SEND_PWM_PIN>13) && (IR_SEND_PWM_PIN<17) ) \
@@ -112,6 +112,13 @@
  	  || ( (IR_SEND_PWM_PIN>18) && (IR_SEND_PWM_PIN<26) ) \
       || (IR_SEND_PWM_PIN>30) ) 
 	#error "Pin unsupported on Adafruit Itsy-Bitsy M0"
+  #endif
+#elif defined (ADAFRUIT_QTPY_M0)
+  //Settings for Adafruit QtPy M0 SAMD21
+  //Default is 3. Available 02-10
+  #define IR_SEND_PWM_PIN 3
+  #if ( (IR_SEND_PWM_PIN > 10) || (IR_SEND_PWM_PIN < 2) )
+    #error "Unsupported output pin on Adafruit QT Py M0"
   #endif
 #elif defined (ARDUINO_SAM_ZERO)
   //Settings for Arduino M0 Pro
@@ -131,10 +138,10 @@
    || ( (IR_SEND_PWM_PIN > 13) && (IR_SEND_PWM_PIN < 17)) \
    || (IR_SEND_PWM_PIN == 19) )
     #error "Unsupported output pin on Arduino Zero"
-  #endif
-#else //Other generic SAMD 21 boards 
+  #else //Other generic SAMD 21 boards 
   //Default is 9.
   #define IR_SEND_PWM_PIN 9
+  #endif
 #endif
 
 /*
@@ -186,6 +193,9 @@ extern Tcc* IR_TCCx;
 #define IR_RECV_CONFIG_TICKS() initializeSAMD21timerInterrupt()
 
 //Clear interrupt
+#ifdef IR_CLEAR_INTERRUPT 
+  #undef IR_CLEAR_INTERRUPT 
+#endif
 #define IR_CLEAR_INTERRUPT 	IR_TCx->COUNT16.INTFLAG.bit.MC0 = 1;
 
 //prototypes
@@ -193,3 +203,4 @@ void initializeSAMD21PWM(uint16_t khz);
 void initializeSAMD21timerInterrupt(void);
 
 #endif //IRLibSAMD21_h
+

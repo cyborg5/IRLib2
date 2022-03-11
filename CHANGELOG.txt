@@ -1,3 +1,7 @@
+Version 2.0.21 March 11, 2022 
+  Fixed Problems with SAMD 21 compile and QtPy M0 support
+Version 2.0.20 April 27, 2021
+  Added support for Adafruit QT Py SAMD 21, fixed documentation typeo
 Version 2.0.19 September 20, 2019 
   Fixed problems with SAMD51 support. Added support for Adafruit Grand Central M4 and Adafruit Feather M4.
 Version 2.0.18 September 1, 2019
